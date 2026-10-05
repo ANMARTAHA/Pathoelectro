@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Study Smart — Fluid and Electrolyte Homeostasis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F6F4;
+    --paper-2:#EAF0ED;
+    --card:#FFFFFF;
+    --ink:#152420;
+    --ink-soft:#4E5F5A;
+    --ink-faint:#8B9C96;
+    --line:#D9E2DD;
+    --teal:#1E6E76;
+    --teal-deep:#144A50;
+    --eosin:#BD5678;
+    --eosin-soft:#F3DCE3;
+    --amber:#C08536;
+    --amber-soft:#F2E3CB;
+    --good:#3D8361;
+    --bad:#BD4B4B;
+    --radius-s:4px;
+    --radius-m:10px;
+  }
+  :root:not([data-theme="light"]){
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#F3F6F4;
+      --paper-2:#EAF0ED;
+      --card:#FFFFFF;
+      --ink:#152420;
+      --ink-soft:#4E5F5A;
+      --ink-faint:#8B9C96;
+      --line:#D9E2DD;
+    }
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    background:var(--paper);
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  body{
+    margin:0;
+    font-family:'IBM Plex Sans',sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  ::selection{background:var(--eosin-soft);}
+
+  a{color:inherit;}
+
+  /* ---------- Header ---------- */
+  header.top{
+    padding:env(safe-area-inset-top,0px) 0 0 0;
+    background:
+      linear-gradient(180deg, var(--paper-2), var(--paper) 85%);
+    border-bottom:1px solid var(--line);
+  }
+  .top-inner{
+    max-width:1080px;
+    margin:0 auto;
+    padding:30px 22px 18px;
+  }
+  .eyebrow-row{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .brandmark{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .brandmark .dot{
+    width:11px;height:11px;border-radius:50%;
+    background:conic-gradient(from 210deg, var(--teal), var(--eosin), var(--amber), var(--teal));
+    flex:none;
+  }
+  h1.title{
+    font-family:'Lora',serif;
+    font-weight:700;
+    font-size:clamp(28px,5vw,40px);
+    margin:14px 0 6px;
+    letter-spacing:-0.01em;
+  }
+  p.subtitle{
+    margin:0 0 4px;
+    color:var(--ink-soft);
+    font-size:15px;
+    max-width:56ch;
+  }
+  .source-tag{
+    font-size:12.5px;
+    color:var(--ink-faint);
+    font-family:'IBM Plex Mono',monospace;
+  }
+
+  /* ---------- Nav ---------- */
+  nav.tabs{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 22px;
+    display:flex;
+    gap:4px;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  nav.tabs::-webkit-scrollbar{display:none;}
+  nav.tabs button{
+    appearance:none;
+    border:none;
+    background:none;
+    font-family:'IBM Plex Sans',sans-serif;
+    font-size:14.5px;
+    font-weight:600;
+    color:var(--ink-faint);
+    padding:14px 14px 13px;
+    cursor:pointer;
+    white-space:nowrap;
+    border-bottom:2.5px solid transparent;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  nav.tabs button .num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    margin-right:7px;
+    color:var(--ink-faint);
+  }
+  nav.tabs button[aria-selected="true"]{
+    color:var(--ink);
+    border-bottom-color:var(--teal);
+  }
+  nav.tabs button[aria-selected="true"] .num{color:var(--teal);}
+  nav.tabs button:hover{color:var(--ink);}
+
+  /* ---------- Main layout ---------- */
+  main{
+    max-width:1080px;
+    margin:0 auto;
+    padding:30px 22px 80px;
+  }
+  section.panel{display:none;}
+  section.panel.active{display:block; animation:fade .35s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+  h2.panel-title{
+    font-family:'Lora',serif;
+    font-size:23px;
+    font-weight:600;
+    margin:0 0 4px;
+  }
+  p.panel-lede{
+    color:var(--ink-soft);
+    margin:0 0 26px;
+    font-size:14.5px;
+    max-width:64ch;
+  }
+
+  /* ---------- Overview ---------- */
+  .overview-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:0;
+    border-top:1px solid var(--line);
+  }
+  .ov-group{
+    padding:20px 18px 22px 18px;
+    border-bottom:1px solid var(--line);
+    border-right:1px solid var(--line);
+  }
+  .ov-group:nth-child(3n){border-right:none;}
+  .ov-group h3{
+    font-family:'Lora',serif;
+    font-size:15.5px;
+    margin:0 0 12px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .ov-group h3::before{
+    content:"";
+    width:3px;height:15px;
+    background:var(--tone,var(--teal));
+    border-radius:2px;
+    display:inline-block;
+  }
+  .ov-group ul{margin:0; padding:0; list-style:none;}
+  .ov-group li{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    padding:6px 0;
+    border-bottom:1px dashed var(--line);
+  }
+  .ov-group li:last-child{border-bottom:none;}
+  .ov-group li b{color:var(--ink); font-weight:600;}
+
+  
+  .ov-sec{font-family:'Lora',serif;font-size:17px;margin:30px 0 12px;display:flex;align-items:center;gap:10px;}
+  .ov-sec:first-of-type{margin-top:8px;}
+  .ov-sec .n{font-family:inherit;font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:2px 8px;}
+  .ov-group.wide{grid-column:1 / -1;border-right:none;}
+  .ov-group p{margin:0;font-size:13.5px;color:var(--ink-soft);line-height:1.6;}
+  .overview-grid .ov-group{border-right:1px solid var(--line);}
+  .overview-grid .ov-group:last-child{border-right:none;}
+  @media (max-width:640px){.ov-group{border-right:none !important;padding:16px 4px 18px;}}
+
+  /* ---------- Diagrams ---------- */
+  .diagram-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius-m);
+    margin-bottom:22px;
+    overflow:hidden;
+  }
+  .diagram-head{
+    padding:16px 20px 14px;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+  .diagram-head h3{
+    font-family:'Lora',serif;
+    font-size:16.5px;
+    margin:0;
+  }
+  .diagram-head span.tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    color:var(--ink-faint);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:3px 9px;
+  }
+  .diagram-body{padding:20px;}
+  .caption-box{
+    margin-top:16px;
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-left:3px solid var(--teal);
+    border-radius:var(--radius-s);
+    padding:12px 14px;
+    font-size:13.5px;
+    color:var(--ink-soft);
+    min-height:20px;
+  }
+  .caption-box .cap-title{color:var(--ink); font-weight:600; display:block; margin-bottom:3px;}
+  .hint{font-size:12px; color:var(--ink-faint); margin-top:8px;}
+
+  /* triad diagram */
+  .triad{position:relative; width:100%; max-width:520px; margin:0 auto; aspect-ratio:1/0.85;}
+  .triad .node{
+    position:absolute;
+    width:110px; height:70px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:13.5px; text-align:center;
+    color:#fff;
+  }
+  .triad .node.host{left:50%; top:8%; transform:translateX(-50%); background:var(--teal);}
+  .triad .node.pathogen{right:2%; bottom:8%; background:var(--eosin);}
+  .triad .node.treatment{left:2%; bottom:8%; background:var(--amber);}
+  .triad button.q{
+    position:absolute;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:20px;
+    font-size:11.5px;
+    font-weight:600;
+    padding:6px 10px;
+    cursor:pointer;
+    color:var(--ink);
+  }
+  .triad button.q:hover{border-color:var(--teal); color:var(--teal);}
+  .triad button.q1{top:32%; left:60%;}
+  .triad button.q2{top:56%; right:8%;}
+  .triad button.q3{bottom:32%; left:24%;}
+  .triad button.q4{top:56%; left:3%;}
+
+  /* tree diagram */
+  .tree-band{margin-bottom:16px;}
+  .tree-band .band-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--ink-faint);
+    margin-bottom:8px;
+    display:block;
+  }
+  .chips{display:flex; flex-wrap:wrap; gap:7px;}
+  .chip{
+    border:1px solid var(--line);
+    background:var(--paper-2);
+    border-radius:20px;
+    padding:6px 12px;
+    font-size:12.5px;
+    font-weight:600;
+    cursor:pointer;
+    color:var(--ink-soft);
+  }
+  .chip:hover{border-color:var(--teal); color:var(--teal-deep);}
+  .chip.active{background:var(--teal); border-color:var(--teal); color:#fff;}
+
+  /* wheel legend */
+  .wheel-wrap{display:flex; gap:26px; align-items:center; flex-wrap:wrap; justify-content:center;}
+  .wheel-ring{
+    width:170px; height:170px; border-radius:50%; flex:none;
+    background:conic-gradient(var(--teal) 0 40%, var(--eosin) 40% 92%, var(--amber) 92% 100%);
+    position:relative;
+    box-shadow:inset 0 0 0 10px var(--card);
+  }
+  .wheel-ring::after{
+    content:"";
+    position:absolute; inset:34px;
+    background:var(--card); border-radius:50%;
+    display:flex;
+  }
+  .legend-list{display:flex; flex-direction:column; gap:8px;}
+  .legend-btn{
+    display:flex; align-items:center; gap:9px;
+    border:1px solid var(--line);
+    background:var(--card);
+    border-radius:var(--radius-s);
+    padding:9px 13px;
+    font-size:13px; font-weight:600;
+    cursor:pointer; color:var(--ink);
+    min-width:190px;
+  }
+  .legend-btn .sw{width:11px; height:11px; border-radius:3px; flex:none;}
+  .legend-btn:hover{border-color:var(--teal);}
+  .legend-btn.active{background:var(--paper-2); border-color:var(--teal);}
+
+  /* iceberg */
+  .iceberg{display:flex; flex-direction:column; align-items:center; gap:2px;}
+  .ice-layer{
+    color:#fff; font-weight:700; font-size:12px;
+    display:flex; align-items:center; justify-content:center;
+    padding:10px 0;
+    cursor:pointer;
+    border:none;
+    width:100%;
+  }
+  .ice-layer:hover{filter:brightness(1.06);}
+  .ice-1{width:16%; background:#1B2A2F; clip-path:polygon(20% 0,80% 0,100% 100%,0 100%);}
+  .ice-2{width:34%; background:var(--eosin); clip-path:polygon(10% 0,90% 0,100% 100%,0 100%);}
+  .ice-3{width:52%; background:var(--amber); clip-path:polygon(8% 0,92% 0,100% 100%,0 100%);}
+  .ice-4{width:70%; background:var(--teal); clip-path:polygon(6% 0,94% 0,100% 100%,0 100%);}
+  .ice-5{width:88%; background:var(--teal-deep); clip-path:polygon(4% 0,96% 0,100% 100%,0 100%);}
+
+  /* epi chart */
+  .epi-chart{width:100%; height:auto;}
+  .epi-toggle{display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap;}
+
+  /* table */
+  table.dx-table{width:100%; border-collapse:collapse; font-size:13.5px;}
+  table.dx-table th{
+    text-align:left; font-family:'IBM Plex Mono',monospace; font-size:11px;
+    color:var(--ink-faint); font-weight:600; padding:8px 10px; border-bottom:1px solid var(--line);
+  }
+  table.dx-table td{padding:11px 10px; border-bottom:1px solid var(--line); cursor:pointer;}
+  table.dx-table tr:hover td{background:var(--paper-2);}
+  table.dx-table tr.active td{background:var(--eosin-soft);}
+  table.dx-table td.dtype{font-weight:700; color:var(--teal-deep);}
+
+  /* anemia figure */
+  .anemia-wrap{display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;}
+  .anemia-silhouette{
+    flex:none; width:96px; height:200px;
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:48px 48px 20px 20px;
+    position:relative;
+  }
+  .anemia-silhouette::before{
+    content:""; position:absolute; top:14px; left:50%; transform:translateX(-50%);
+    width:38px; height:38px; border-radius:50%; background:var(--card); border:1px solid var(--line);
+  }
+  .region-chips{display:flex; flex-wrap:wrap; gap:7px; flex:1; min-width:220px;}
+
+  /* ---------- Mini map ---------- */
+  .mm-bar{display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap;}
+  .mm-btn{border:1px solid var(--line); background:var(--card); border-radius:20px; padding:6px 13px; font-size:12.5px; font-weight:600; color:var(--ink-soft); cursor:pointer;}
+  .mm-btn:hover{color:var(--teal-deep); border-color:var(--teal);}
+  .mm-tree{background:var(--card); border:1px solid var(--line); border-radius:var(--radius-m); padding:14px 12px 16px;}
+  .mm-kids{margin:2px 0 4px 13px; padding-left:12px; border-left:1.5px solid var(--line);}
+  .mm-kids[hidden]{display:none;}
+  .mm-row{display:flex; align-items:center; gap:8px; width:100%; text-align:left; background:none; border:none; border-radius:7px; padding:7px 8px; cursor:pointer; color:var(--ink-soft); font:inherit; font-size:13.5px; line-height:1.35;}
+  .mm-row:hover{background:var(--paper-2);}
+  .mm-row.leaf{cursor:default;}
+  .mm-row.leaf:hover{background:none;}
+  .mm-txt{flex:1; min-width:0;}
+  .mm-rel{flex:none; font-family:'IBM Plex Mono',monospace; font-size:9.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--teal); background:var(--paper-2); border:1px solid var(--line); border-radius:4px; padding:1px 5px;}
+  .mm-cnt{flex:none; font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--ink-faint);}
+  .mm-chev{flex:none; width:16px; text-align:center; color:var(--ink-faint); transition:transform .15s; font-size:16px; line-height:1;}
+  .mm-node.open > .mm-row .mm-chev{transform:rotate(90deg); color:var(--teal);}
+  .d0 > .mm-row{background:var(--teal-deep); color:#fff; font-family:'Lora',serif; font-size:16px; font-weight:700; padding:11px 12px; margin-bottom:6px;}
+  .d0 > .mm-row .mm-cnt,.d0 > .mm-row .mm-chev{color:#fff; opacity:.8;}
+  .d1 > .mm-row{color:var(--teal-deep); font-weight:700; font-size:14.5px;}
+  .d2 > .mm-row{color:var(--ink); font-weight:600;}
+  .mm-node.open > .mm-row .mm-txt{color:var(--teal-deep);}
+  .d0.open > .mm-row .mm-txt{color:#fff;}
+
+  /* ---------- Flashcards ---------- */
+  .fc-toolbar{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px;}
+  .fc-filter{
+    border:1px solid var(--line); background:var(--card); border-radius:20px;
+    padding:6px 13px; font-size:12.5px; font-weight:600; color:var(--ink-soft); cursor:pointer;
+  }
+  .fc-filter.active{background:var(--teal-deep); border-color:var(--teal-deep); color:#fff;}
+  .fc-count{font-size:12.5px; color:var(--ink-faint); margin-bottom:14px;}
+  .fc-grid{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px;
+  }
+  .fc-card{
+    perspective:1200px; height:150px; cursor:pointer;
+  }
+  .fc-inner{
+    position:relative; width:100%; height:100%;
+    transform-style:preserve-3d; transition:transform .5s cubic-bezier(.4,.1,.2,1);
+  }
+  .fc-card.flipped .fc-inner{transform:rotateY(180deg);}
+  .fc-face{
+    position:absolute; inset:0; backface-visibility:hidden;
+    border-radius:var(--radius-s); border:1px solid var(--line);
+    padding:14px; display:flex; flex-direction:column;
+  }
+  .fc-front{background:var(--card);}
+  .fc-back{background:var(--teal-deep); color:#fff; transform:rotateY(180deg); border-color:var(--teal-deep);}
+  .fc-tab{
+    font-family:'IBM Plex Mono',monospace; font-size:9.5px; text-transform:uppercase;
+    letter-spacing:.03em; margin-bottom:8px; color:var(--ink-faint);
+  }
+  .fc-back .fc-tab{color:rgba(255,255,255,.6);}
+  .fc-term{font-family:'Lora',serif; font-weight:600; font-size:16.5px; margin-top:auto; margin-bottom:auto;}
+  .fc-def{font-size:12.5px; line-height:1.45; margin-top:auto; margin-bottom:auto; overflow-y:auto;}
+  .fc-flip-hint{font-size:10.5px; color:var(--ink-faint); align-self:flex-end;}
+  .fc-back .fc-flip-hint{color:rgba(255,255,255,.55);}
+
+  /* ---------- Quiz ---------- */
+  .quiz-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;}
+  .quiz-progress{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-faint);}
+  .quiz-score{font-size:12.5px; font-weight:600; color:var(--teal-deep);}
+  .progress-track{height:4px; background:var(--line); border-radius:3px; overflow:hidden; margin-bottom:22px;}
+  .progress-fill{height:100%; background:var(--teal); width:0%; transition:width .3s ease;}
+  .quiz-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius-m);
+    padding:26px 24px;
+  }
+  .quiz-q{font-family:'Lora',serif; font-size:18px; font-weight:600; margin:0 0 20px;}
+  .quiz-options{display:flex; flex-direction:column; gap:9px;}
+  .quiz-opt{
+    text-align:left; border:1px solid var(--line); background:var(--paper);
+    border-radius:var(--radius-s); padding:12px 15px; font-size:14px; cursor:pointer;
+    display:flex; gap:10px; align-items:flex-start;
+  }
+  .quiz-opt .letter{
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:700;
+    color:var(--ink-faint); flex:none; margin-top:1px;
+  }
+  .quiz-opt:hover:not(.locked){border-color:var(--teal);}
+  .quiz-opt.correct{background:#E4F3EA; border-color:var(--good); color:#20502F;}
+  .quiz-opt.correct .letter{color:var(--good);}
+  .quiz-opt.wrong{background:#FBE9E9; border-color:var(--bad); color:#6E2323;}
+  .quiz-opt.wrong .letter{color:var(--bad);}
+  .quiz-foot{display:flex; justify-content:space-between; align-items:center; margin-top:20px; flex-wrap:wrap; gap:10px;}
+  .quiz-btn{
+    border:1px solid var(--teal-deep); background:var(--teal-deep); color:#fff;
+    padding:10px 18px; border-radius:var(--radius-s); font-size:13.5px; font-weight:600; cursor:pointer;
+  }
+  .quiz-btn:disabled{opacity:.35; cursor:not-allowed;}
+  .quiz-btn.ghost{background:none; color:var(--teal-deep);}
+  .quiz-feedback{font-size:12.5px; color:var(--ink-faint); min-height:16px;}
+  .quiz-jump{display:flex; flex-wrap:wrap; gap:5px; margin-top:22px;}
+  .quiz-jump button{
+    width:26px; height:26px; border-radius:5px; border:1px solid var(--line); background:var(--card);
+    font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--ink-faint); cursor:pointer;
+  }
+  .quiz-jump button.done{background:var(--paper-2); color:var(--ink-soft);}
+  .quiz-jump button.current{border-color:var(--teal); color:var(--teal-deep); font-weight:700;}
+  .quiz-summary{text-align:center; padding:30px 10px;}
+  .quiz-summary .big{font-family:'Lora',serif; font-size:42px; font-weight:700; color:var(--teal-deep);}
+
+  /* ---------- Difficulty levels (added) ---------- */
+  .fc-grid.tall{grid-template-columns:repeat(auto-fill,minmax(270px,1fr));}
+  .fc-grid.tall .fc-card{height:300px;}
+  .fc-def{margin-top:0 !important; margin-bottom:auto !important;}
+  .fc-def .fc-exp{display:block; margin-top:10px; padding-top:8px; border-top:1px solid rgba(255,255,255,.3); font-size:11.5px; opacity:.92;}
+  .fc-term.long{margin-top:auto; margin-bottom:auto;}
+  .fc-term.long{font-size:14px; line-height:1.4; overflow-y:auto;}
+  .quiz-feedback{flex:1 1 240px; line-height:1.45;}
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:22px;
+    text-align:center;
+    font-size:12px;
+    color:var(--ink-faint);
+    padding-bottom:calc(22px + env(safe-area-inset-bottom,0px));
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <div class="eyebrow-row">
+      <div class="brandmark"><span class="dot"></span><span class="source-tag">Fluid and Electrolyte Homeostasis</span></div>
+      <span class="source-tag">Edema · Na · K · Ca · Mg · Phosphate</span>
+    </div>
+    <h1 class="title">Study Smart</h1>
+    <p class="subtitle">A visual guide to Fluid and Electrolyte Homeostasis — reference ranges, disorders and treatment, built for quick review and self-testing.</p>
+  </div>
+  <nav class="tabs" id="tabs">
+    <button data-panel="overview" aria-selected="true"><span class="num">01</span>Overview</button>
+    <button data-panel="diagrams" aria-selected="false"><span class="num">02</span>Diagrams</button>
+    <button data-panel="minimap" aria-selected="false"><span class="num">03</span>Mini Map</button>
+    <button data-panel="flashcards" aria-selected="false"><span class="num">04</span>Flashcards</button>
+    <button data-panel="quiz" aria-selected="false"><span class="num">05</span>Quiz Bank</button>
+  </nav>
+</header>
+<main>
+  <section class="panel active" id="panel-overview">
+    <h2 class="panel-title">The lecture in one pass</h2>
+    <p class="panel-lede">Core idea, definitions, classifications, differences, sequences, clinical use and exam focus — organised from the lecture only.</p>
+    <h3 class="ov-sec"><span class="n">01</span>Core Idea</h3><div class="overview-grid"><div class="ov-group wide" style="--tone:var(--teal)"><h3>Fluid and Electrolyte Homeostasis</h3><p>Dr. Ghofran Ali Jasim — M.B.CH.B, F.I.C.M.S(path). The lecture covers edema and the disorders of sodium, potassium, calcium, magnesium and phosphate: reference values and thresholds, mechanisms and causes, clinical features, diagnostic evaluation and treatment.</p></div></div><h3 class="ov-sec"><span class="n">02</span>Learning Points</h3><div class="overview-grid"><div class="ov-group wide" style="--tone:var(--eosin)"><h3>What the student should leave with</h3><ul><li>Know the reference ranges and the diagnostic cut-offs for Na, K, Ca, Mg and phosphate.</li><li><b>Edema</b> = clinically detectable ↑ interstitial fluid, driven by sodium retention; treated with Na restriction, correction of the cause and diuretics.</li><li>Sodium disorders reflect water relative to sodium: <b>hypernatremia</b> (water / hypotonic fluid loss) vs <b>hyponatremia</b> (excess ECF water from impaired water excretion).</li><li>Hyponatremia is classified by serum osmolality and by volume status; treatment depends on the type and on symptoms. Avoid overly rapid correction (osmotic demyelination).</li><li>Hypernatremia: correct the volume disturbance first, then the hypertonicity.</li><li>Potassium: hypokalemia = total-body deficit or shift into cells; hyperkalemia = intake &gt; excretion or disturbed distribution.</li><li>Calcium disorders reflect the effects of parathyroid hormone and vitamin D on bone, gut and kidney.</li><li>Mg, K and Ca disorders can coexist; hyperphosphatemia produces hypocalcemia.</li><li>Treatment is chosen by severity, symptoms and clinical setting (oral vs IV, saline vs dextrose, diuretics, binders, dialysis).</li></ul></div></div><h3 class="ov-sec"><span class="n">03</span>Key Definitions &amp; Reference Values</h3><div class="overview-grid"><div class="ov-group" style="--tone:var(--amber)"><h3>Sodium</h3><ul><li><b>Normal</b> 135–145 mmol/L</li><li><b>Hypernatremia</b> serum Na &gt;145 mmol/L (&gt;145 mEq/L)</li><li><b>Hyponatremia</b> serum Na &lt;135 mmol/L</li><li>Mild 130–134 · Moderate 125–129 · Profound &lt;125 mmol/L</li></ul></div><div class="ov-group" style="--tone:var(--teal)"><h3>Potassium</h3><ul><li><b>Normal</b> 3.4–5.0 mmol/L</li><li><b>Hypokalemia</b> serum K &lt;3.5 mEq/L</li><li>Moderate 2.5–3.0 · Severe &lt;2.5</li><li><b>Hyperkalemia</b> serum K &gt;5 mEq/L (&gt;5 mmol/L)</li></ul></div><div class="ov-group" style="--tone:var(--eosin)"><h3>Calcium</h3><ul><li><b>Normal</b> total 2.12–2.60 mmol/L; ionized 1.19–1.37 mmol/L</li><li><b>Hypocalcemia</b> total Ca &lt;8.5 mg/dL (&lt;2.13 mmol/L)</li><li><b>Hypercalcemia</b> total Ca &gt;10.5 mg/dL (&gt;2.62 mmol/L)</li></ul></div><div class="ov-group" style="--tone:var(--amber)"><h3>Magnesium</h3><ul><li><b>Normal</b> 0.7–1.00 mmol/L</li><li><b>Hypomagnesemia</b> Mg &lt;1.4 mEq/L (&lt;0.70 mmol/L)</li><li><b>Hypermagnesemia</b> Mg &gt;2 mEq/L (&gt;1 mmol/L)</li></ul></div><div class="ov-group" style="--tone:var(--teal)"><h3>Phosphate</h3><ul><li><b>Normal</b> 0.80–1.44 mmol/L</li><li><b>Hyperphosphatemia</b> phosphorus &gt;4.5 mg/dL (&gt;1.45 mmol/L)</li><li><b>Hypophosphatemia</b> phosphorus &lt;2 mg/dL (&lt;0.65 mmol/L)</li></ul></div><div class="ov-group" style="--tone:var(--eosin)"><h3>Edema &amp; terms</h3><ul><li><b>Edema</b> clinically detectable ↑ in interstitial fluid volume</li><li><b>Pedal edema</b> limited to feet / lower legs</li><li><b>SIADH</b> syndrome of inappropriate antidiuretic hormone secretion</li><li><b>ATN</b> acute tubular necrosis</li><li><b>ARDS</b> acute respiratory distress syndrome</li><li><b>Pure-water deficit</b> water loss without matching sodium loss (a mechanism of hypernatremia)</li></ul></div><div class="ov-group wide" style="--tone:var(--amber)"><h3>Tonicity (cell response)</h3><ul><li><b>Hypotonic</b> — solute higher inside the cell; water enters; cells inflate and eventually burst</li><li><b>Isotonic</b> — solute equal inside and outside; water in = water out</li><li><b>Hypertonic</b> — solute lower inside the cell; water leaves; cells shrink</li></ul></div></div><h3 class="ov-sec"><span class="n">04</span>Classification / Types</h3><div class="overview-grid"><div class="ov-group" style="--tone:var(--eosin)"><h3>Types of edema</h3><ul><li><b>Peripheral</b> — legs, feet, ankles; may involve arms</li><li><b>Lymphedema</b> — may follow cancer treatment (surgery, radiation)</li><li><b>Pulmonary</b> — heart failure, or noncardiogenic: infection, ARDS, toxic exposures</li><li><b>Cerebral</b> — trauma, stroke, cancer</li><li><b>Others</b> — e.g. macular edema</li></ul></div><div class="ov-group" style="--tone:var(--amber)"><h3>Causes of hypernatremia (mechanism)</h3><ul><li><b>Loss of hypotonic fluid</b> — Renal: loop/thiazide diuretics, osmotic diuresis, postobstructive diuresis, diuretic phase of ATN. Nonrenal: vomiting, diarrhea, GI drainage/fistulae, sweating, burns</li><li><b>Pure-water deficit</b> — reduced water access/intake, neurologic or psychologic disease, respiratory water loss, AVP deficiency (diabetes insipidus)</li><li><b>Hypertonic sodium gain</b> — hypertonic electrolyte solutions, sodium bicarbonate, sodium ingestion, sodium modeling in hemodialysis</li><li><b>Water shift into cells</b> — extreme exercise or seizures (↑ intracellular osmoles)</li></ul></div><div class="ov-group" style="--tone:var(--amber)"><h3>Classification of hyponatremia</h3><ul><li><b>Isotonic</b> — isotonic serum osmolality</li><li><b>Hypertonic</b> — hypertonic serum osmolality</li><li><b>Hypotonic – hypovolemic</b> — loss of ECF volume and Na; Na loss &gt; water loss; may occur with thiazides</li><li><b>Hypotonic – euvolemic</b> — normal/slightly ↓ ECF Na with ↑ total body water; commonly SIADH</li><li><b>Hypotonic – hypervolemic</b> — ↑ ECF volume with impaired renal Na/water excretion; cirrhosis, heart failure, nephrotic syndrome</li></ul></div><div class="ov-group" style="--tone:var(--teal)"><h3>Hyperkalemia — major mechanisms</h3><ul><li>↑ intake</li><li>↓ excretion</li><li>Tubular unresponsiveness to aldosterone</li><li>Redistribution to extracellular space</li></ul></div><div class="ov-group" style="--tone:var(--teal)"><h3>Drug-induced hypokalemia</h3><ul><li><b>Transcellular shift</b> — tocolytic agents, theophylline, caffeine, insulin overdose</li><li><b>Enhanced renal excretion</b> — diuretics, high-dose penicillins, mineralocorticoids, aminoglycosides, amphotericin B, cisplatin</li><li><b>Enhanced fecal elimination</b> — laxatives, sorbitol</li></ul></div><div class="ov-group" style="--tone:var(--eosin)"><h3>Hypercalcemia — mechanisms</h3><ul><li>↑ bone resorption</li><li>↑ GI absorption</li><li>↑ renal tubular reabsorption</li></ul></div><div class="ov-group" style="--tone:var(--teal)"><h3>Hypophosphatemia — mechanisms</h3><ul><li>↓ GI absorption</li><li>↓ tubular reabsorption</li><li>Extracellular-to-intracellular redistribution</li></ul></div></div><h3 class="ov-sec"><span class="n">05</span>Important Concepts</h3><div class="overview-grid"><div class="ov-group" style="--tone:var(--eosin)"><h3>Edema</h3><ul><li>Develops when <b>excess sodium is retained</b>: impaired renal Na excretion or ↓ effective circulating volume</li><li>Common settings: ↓ myocardial contractility, nephrotic syndrome, cirrhosis</li></ul></div><div class="ov-group" style="--tone:var(--amber)"><h3>Hypernatremia</h3><ul><li>Water loss or hypotonic fluid loss; less commonly hypertonic fluid administration or sodium ingestion</li><li>Neurologic: weakness, lethargy, restlessness, irritability, confusion</li><li>Rapid onset: twitching, seizures, coma, death</li></ul></div><div class="ov-group" style="--tone:var(--amber)"><h3>Hyponatremia</h3><ul><li>Excess extracellular water relative to sodium, from impaired water excretion</li><li>Non-osmotic AVP release in hypovolemia, CHF, nephrosis, cirrhosis or SIADH</li><li>Severity depends on magnitude and rapidity of onset</li></ul></div><div class="ov-group" style="--tone:var(--teal)"><h3>Hypokalemia</h3><ul><li>Total-body K deficit or shift of K into cells</li><li>Causes: loop/thiazide diuretics, diarrhea, vomiting, hypomagnesemia</li><li>Moderate: muscle weakness, cramping, malaise, myalgia</li><li>Severe: arrhythmias and ECG changes</li></ul></div><div class="ov-group" style="--tone:var(--teal)"><h3>Hyperkalemia</h3><ul><li>Intake exceeds excretion, or transcellular distribution is disturbed</li><li>Often asymptomatic; palpitations and ECG changes may occur</li></ul></div><div class="ov-group" style="--tone:var(--eosin)"><h3>Hypocalcemia</h3><ul><li>Altered effects of PTH and vitamin D on bone, gut and kidney</li><li>Primary causes: postoperative hypoparathyroidism, vitamin D deficiency</li><li><b>Tetany</b> = hallmark of acute hypocalcemia; prolonged QT may occur</li></ul></div><div class="ov-group" style="--tone:var(--eosin)"><h3>Hypercalcemia</h3><ul><li><b>Cancer and hyperparathyroidism</b> = most common causes</li><li>Malignancy-associated: anorexia, nausea, vomiting, constipation, polyuria, polydipsia, nocturia</li></ul></div><div class="ov-group" style="--tone:var(--amber)"><h3>Hypomagnesemia</h3><ul><li>GI or renal disorders, several drugs; commonly associated with <b>alcoholism</b></li><li>Neuromuscular and cardiovascular systems most affected; <b>ventricular arrhythmias</b> particularly important</li><li>May coexist with hypokalemia and hypocalcemia</li></ul></div><div class="ov-group" style="--tone:var(--amber)"><h3>Hypermagnesemia</h3><ul><li>Usually reduced GFR / advanced CKD</li><li>Other causes: Mg-containing antacids, nutrition support, eclampsia treatment, lithium, hypothyroidism, Addison disease</li><li>Rising Mg: sedation, hyporeflexia, coma, paralysis, respiratory depression</li><li>Cardiovascular effects progress from hypotension and bradycardia</li></ul></div><div class="ov-group" style="--tone:var(--teal)"><h3>Hyperphosphatemia</h3><ul><li>Most commonly ↓ phosphorus excretion from decreased GFR</li><li>Intracellular phosphate release: rhabdomyolysis, hemolysis, tumor lysis syndrome</li><li>Major effects: hypocalcemia and calcium-phosphate precipitation in tissues</li></ul></div><div class="ov-group" style="--tone:var(--teal)"><h3>Hypophosphatemia</h3><ul><li>Associated with: inadequate phosphate in parenteral nutrition, chronic alcoholism, chronic antacid use, DKA, prolonged hyperventilation</li><li>Severe disease affects neurologic, skeletal muscle, respiratory and cardiovascular systems</li></ul></div></div><h3 class="ov-sec"><span class="n">06</span>Important Differences</h3><div class="overview-grid"><div class="ov-group" style="--tone:var(--amber)"><h3>Hypernatremia vs hyponatremia</h3><ul><li>Hyper: Na &gt;145 — water / hypotonic fluid loss</li><li>Hypo: Na &lt;135 — excess ECF water relative to Na (impaired water excretion)</li></ul></div><div class="ov-group" style="--tone:var(--amber)"><h3>Hypotonic hyponatremia by volume</h3><ul><li><b>Hypovolemic</b>: ECF volume and Na lost; Na loss &gt; water loss</li><li><b>Euvolemic</b>: ECF Na normal/slightly ↓, total body water ↑; SIADH</li><li><b>Hypervolemic</b>: ECF volume ↑, impaired renal Na/water excretion</li></ul></div><div class="ov-group" style="--tone:var(--amber)"><h3>Which test separates what (hyponatremia)</h3><ul><li><b>Serum osmolality</b> — true hyponatremia vs pseudohyponatremia or hypertonic hyponatremia</li><li><b>Urine osmolality</b> — impaired free-water excretion vs primary polydipsia</li><li><b>Urinary Na</b> — hypovolemic hyponatremia vs SIADH</li></ul></div><div class="ov-group" style="--tone:var(--amber)"><h3>Which test separates what (hypernatremia)</h3><ul><li><b>Urine &amp; plasma osmolality</b> — nonrenal causes vs renal water loss</li><li><b>Urine output</b> — polyuria prompts evaluation for diabetes insipidus</li><li><b>Plasma AVP</b> — central vs nephrogenic diabetes insipidus</li></ul></div><div class="ov-group" style="--tone:var(--amber)"><h3>Central vs nephrogenic DI (treatment)</h3><ul><li>Central: <b>desmopressin</b></li><li>Nephrogenic: <b>thiazide diuretic</b> + dietary Na restriction</li></ul></div><div class="ov-group" style="--tone:var(--teal)"><h3>Hyperkalemia interventions compared</h3><ul><li><b>Dialysis</b> — most rapid way to lower serum K</li><li><b>IV calcium</b> — reverses ECG changes/arrhythmias but does NOT lower K</li><li><b>Insulin + dextrose / bicarbonate / salbutamol</b> — shift K into cells</li><li><b>Loop diuretics</b> — ↑ renal K excretion</li><li><b>Potassium binders</b> — suitable asymptomatic mild–moderate cases</li></ul></div><div class="ov-group" style="--tone:var(--teal)"><h3>Hyperphosphatemia binders</h3><ul><li>Aluminum salts, calcium carbonate</li><li>Non-calcium / non-aluminum: sevelamer, lanthanum carbonate, sucroferric oxyhydroxide, ferric citrate</li></ul></div><div class="ov-group" style="--tone:var(--eosin)"><h3>Route of replacement</h3><ul><li><b>K</b>: oral KCl preferred; IV for severe, symptomatic or oral-intolerant</li><li><b>Mg</b>: IV if &lt;1 mEq/L or symptomatic; oral if &gt;1 mEq/L; IM only if severe/limited venous access (painful)</li><li><b>Phosphorus</b>: oral if mild–moderate; IV if severe/symptomatic</li><li><b>Ca</b>: calcium gluconate preferred peripherally (less irritating)</li></ul></div><div class="ov-group" style="--tone:var(--eosin)"><h3>Edema types</h3><ul><li>Peripheral = legs, feet, ankles (± arms); pedal = feet/lower legs only</li></ul></div></div><h3 class="ov-sec"><span class="n">07</span>Processes / Stages</h3><div class="overview-grid"><div class="ov-group" style="--tone:var(--amber)"><h3>Hypernatremia management sequence</h3><ul><li>1. Recognize symptoms and identify the underlying cause</li><li>2. Correct volume disturbance</li><li>3. Correct hypertonicity</li><li>Hypovolemic: start with 0.9% saline → after stabilization replace free-water deficit with 5% dextrose or 0.45% saline</li></ul></div><div class="ov-group" style="--tone:var(--amber)"><h3>Hyponatremia management</h3><ul><li>Severe symptoms: 100 mL of 3% NaCl IV over 10 min, repeated up to ×3</li><li>Mild–moderate symptoms, low herniation risk: 3% NaCl 0.5–2 mL/kg/h</li><li>Throughout: avoid overly rapid correction (osmotic demyelination)</li></ul></div><div class="ov-group" style="--tone:var(--eosin)"><h3>Hypocalcemia stepwise</h3><ul><li>Acute symptomatic → IV soluble calcium salts</li><li>Chronic → oral calcium</li><li>Add vitamin D if calcium does not normalize</li><li>Selected cases → recombinant human PTH</li></ul></div><div class="ov-group" style="--tone:var(--eosin)"><h3>Hypercalcemia stepwise</h3><ul><li>Mild–moderate asymptomatic → treat cause, correct fluid/electrolytes</li><li>Crisis → normal saline rehydration, then loop diuretics in appropriate patients</li><li>Saline contraindicated → calcitonin</li></ul></div><div class="ov-group" style="--tone:var(--teal)"><h3>Severity grading</h3><ul><li>Hyponatremia: mild 130–134 → moderate 125–129 → profound &lt;125</li><li>Hypokalemia: &lt;3.5 → moderate 2.5–3.0 → severe &lt;2.5</li></ul></div></div><h3 class="ov-sec"><span class="n">10</span>Clinical / Practical Importance</h3><div class="overview-grid"><div class="ov-group" style="--tone:var(--amber)"><h3>Hypernatremia — work-up</h3><ul><li>Serum electrolytes (Na, K, Ca) · glucose · kidney function (urea, creatinine)</li><li>Urine electrolytes (Na, K) · urine &amp; plasma osmolality</li><li>24-h urine volume · plasma AVP if indicated</li></ul></div><div class="ov-group" style="--tone:var(--amber)"><h3>Hypernatremia — treatment</h3><ul><li>Central DI: desmopressin</li><li>Nephrogenic DI: thiazide + dietary Na restriction</li><li>Sodium overload: loop diuretics + 5% dextrose</li></ul></div><div class="ov-group" style="--tone:var(--amber)"><h3>Hyponatremia — treatment</h3><ul><li>SIADH: 3% saline + loop diuretic; selected cases: NaCl/urea tablets, demeclocycline, vaptans</li><li>Hypovolemic hypotonic: 0.9% saline</li><li>Hypervolemic hypotonic: 3% saline, fluid restriction, loop diuretic</li></ul></div><div class="ov-group" style="--tone:var(--eosin)"><h3>Edema — treatment</h3><ul><li>Na restriction + correct underlying disease</li><li>Diuretics primary: loop (most potent) &gt; thiazides &gt; K-sparing</li></ul></div><div class="ov-group" style="--tone:var(--teal)"><h3>Hypokalemia — treatment</h3><ul><li>Mild deficit in chronic loop/thiazide use: 40–100 mEq K</li><li>Oral KCl preferred</li><li>IV K for severe, symptomatic, or oral intolerance</li><li>Give IV K in saline — dextrose may stimulate insulin and worsen intracellular K shift</li></ul></div><div class="ov-group" style="--tone:var(--teal)"><h3>Hyperkalemia — additional</h3><ul><li><b>Magnesium sulfate</b> — arrhythmias from digitalis toxicity in hyperkalemic patients</li></ul></div><div class="ov-group" style="--tone:var(--eosin)"><h3>Hypocalcemia — treatment</h3><ul><li>Acute symptomatic: IV calcium salts (gluconate peripherally)</li><li>Associated hypomagnesemia: Mg supplementation</li><li>Chronic: oral calcium ± vitamin D</li><li>Selected: recombinant human PTH</li></ul></div><div class="ov-group" style="--tone:var(--eosin)"><h3>Hypercalcemia — treatment</h3><ul><li>Malignancy-associated: bisphosphonates; denosumab after suboptimal bisphosphonate response</li><li>Parathyroid carcinoma: cinacalcet has been used</li><li>Corticosteroids may ↓ GI Ca absorption in myeloma, leukemia, lymphoma, sarcoidosis, hypervitaminosis A/D</li></ul></div><div class="ov-group" style="--tone:var(--amber)"><h3>Hypomagnesemia — treatment</h3><ul><li>Severe / limited venous access: IM Mg (painful)</li><li>&lt;1 mEq/L or symptomatic: IV Mg</li><li>&gt;1 mEq/L: oral Mg (sustained-release may improve tolerance)</li><li>Renal insufficiency: reduce Mg dose</li><li>Avoid urinary K loss: amiloride, spironolactone or triamterene</li></ul></div><div class="ov-group" style="--tone:var(--amber)"><h3>Hypermagnesemia — treatment</h3><ul><li>IV calcium — antagonizes neuromuscular and cardiovascular effects</li><li>0.45% NaCl + loop diuretic — ↑ Mg elimination with adequate renal function</li><li>Dialysis patients: Mg-free dialysate</li><li>Glucose + insulin — may promote Mg entry into cells; glucose prevents hypoglycemia</li></ul></div><div class="ov-group" style="--tone:var(--teal)"><h3>Hyperphosphatemia — treatment</h3><ul><li>↓ GI absorption: phosphate binders</li><li>Severe symptomatic with tetany: IV calcium salts</li><li>↑ renal excretion: loop diuretics or acetazolamide (carbonic anhydrase inhibitor)</li></ul></div><div class="ov-group" style="--tone:var(--teal)"><h3>Hypophosphatemia — treatment</h3><ul><li>Mild–moderate/asymptomatic: oral phosphorus</li><li>Severe/symptomatic: IV phosphorus</li><li>Monitor phosphorus and calcium frequently in renal dysfunction or during IV replacement</li><li>Vitamin D enhances intestinal and renal phosphate absorption</li><li>Burosumab: X-linked hypophosphatemia, adults and children ≥6 months</li></ul></div><div class="ov-group wide" style="--tone:var(--teal)"><h3>Severe hypophosphatemia — manifestations</h3><ul><li><b>Neurologic</b>: irritability, weakness, numbness, paresthesias, dysarthria, confusion, seizures, coma</li><li><b>Skeletal muscle</b>: myalgia, bone pain, weakness, potentially fatal rhabdomyolysis</li><li><b>Respiratory</b>: respiratory muscle weakness, diaphragmatic dysfunction → acute respiratory failure</li><li><b>Others</b>: cardiomyopathy, arrhythmias, hemolysis, ↑ infection risk</li><li><b>Chronic</b>: osteopenia and osteomalacia</li></ul></div></div><h3 class="ov-sec"><span class="n">11</span>Exam Focus</h3><div class="overview-grid"><div class="ov-group wide" style="--tone:var(--eosin)"><h3>High-yield points from the lecture</h3><ul><li>All reference ranges and cut-offs (Na 135–145; K 3.4–5.0; total Ca 2.12–2.60; PO₄ 0.80–1.44; Mg 0.7–1.00 mmol/L).</li><li>Hyponatremia grades: mild 130–134, moderate 125–129, profound &lt;125.</li><li>Hypokalemia: moderate 2.5–3.0, severe &lt;2.5.</li><li>Five hyponatremia types, and which test separates them (serum osm, urine osm, urinary Na).</li><li>Four mechanisms of hypernatremia with their examples.</li><li>Hypernatremia: volume first, then tonicity; hypovolemic → 0.9% saline then 5% dextrose / 0.45% saline.</li><li>Hyponatremia: 3% NaCl 100 mL over 10 min (×3); avoid rapid correction → osmotic demyelination.</li><li>IV K in saline, not dextrose; oral KCl preferred.</li><li>Hyperkalemia: dialysis fastest; IV calcium reverses ECG but does not lower K; insulin/bicarbonate/salbutamol shift K.</li><li>Tetany + prolonged QT = acute hypocalcemia; calcium gluconate peripherally.</li><li>Hypercalcemia: cancer and hyperparathyroidism; saline → loop diuretics; bisphosphonates, denosumab, cinacalcet, calcitonin, corticosteroids by setting.</li><li>Hypomagnesemia: alcoholism, ventricular arrhythmias, coexists with ↓K and ↓Ca. Hypermagnesemia: CKD; IV calcium antagonizes.</li><li>Hyperphosphatemia: ↓GFR → hypocalcemia and Ca-phosphate precipitation; binders.</li><li>Severe hypophosphatemia: rhabdomyolysis, respiratory failure; burosumab for X-linked form.</li></ul></div></div>
+  </section>
+  <section class="panel" id="panel-diagrams">
+    <h2 class="panel-title">The lecture’s tables, made clickable</h2>
+    <p class="panel-lede">Tap any element to read what it means.</p>
+    <div id="diagHost"></div>
+  </section>
+  <section class="panel" id="panel-minimap">
+    <h2 class="panel-title">Mini map</h2>
+    <p class="panel-lede">Tap a node to open its branches — from the main topic down to the key details. Tags show how a branch relates to its parent.</p>
+    <div class="mm-bar"><button class="mm-btn" id="mmExpand">Expand all</button><button class="mm-btn" id="mmCollapse">Collapse all</button></div>
+    <div class="mm-tree" id="mmTree"></div>
+  </section>
+  <section class="panel" id="panel-flashcards">
+    <h2 class="panel-title">Flashcards</h2>
+    <p class="panel-lede">Choose a difficulty level, then tap a card to flip it.</p>
+    <div class="fc-toolbar" id="fcLevels"></div><div class="fc-count" id="fcCount"></div><div class="fc-grid" id="fcGrid"></div>
+  </section>
+  <section class="panel" id="panel-quiz">
+    <h2 class="panel-title">Quiz Bank</h2>
+    <p class="panel-lede">50 questions built only from the lecture. Choose a level — answer positions (A–D) are randomized each time you load the page, and every answer comes with an explanation.</p>
+    <div class="fc-toolbar" id="quizLevels"></div>
+    <div class="quiz-top"><span class="quiz-progress" id="quizProgress"></span><span class="quiz-score" id="quizScore">Score: 0 / 0</span></div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="quiz-card" id="quizCard">
+      <p class="quiz-q" id="quizQ"></p><div class="quiz-options" id="quizOptions"></div>
+      <div class="quiz-foot"><span class="quiz-feedback" id="quizFeedback"></span>
+        <div style="display:flex; gap:8px;"><button class="quiz-btn ghost" id="quizPrev">Previous</button><button class="quiz-btn" id="quizNext" disabled>Next</button></div></div>
+    </div>
+    <div class="quiz-card" id="quizSummary" style="display:none;"></div>
+    <div class="quiz-jump" id="quizJump"></div>
+    <table style="margin:26px auto 0; border-collapse:collapse; font-size:13.5px; min-width:220px;"><thead><tr><th style="text-align:left; padding:6px 18px; border-bottom:2px solid var(--teal);">Level</th><th style="text-align:right; padding:6px 18px; border-bottom:2px solid var(--teal);">Questions</th></tr></thead><tbody><tr><td style="padding:5px 18px;">Easy</td><td style="text-align:right; padding:5px 18px;">25</td></tr><tr><td style="padding:5px 18px;">Medium</td><td style="text-align:right; padding:5px 18px;">15</td></tr><tr><td style="padding:5px 18px;">Hard</td><td style="text-align:right; padding:5px 18px;">10</td></tr><tr><td style="padding:5px 18px; font-weight:700; border-top:1px solid var(--teal);">Total</td><td style="text-align:right; padding:5px 18px; font-weight:700; border-top:1px solid var(--teal);">50</td></tr></tbody></table>
+  </section>
+</main>
+<footer>© 2026 Anmar Taha. All rights reserved. · Study Smart — a self-study companion for Fluid and Electrolyte Homeostasis.</footer>
+<script>
+(function(){
+  "use strict";
+/* ---------------- Tabs ---------------- */
+  var tabButtons = document.querySelectorAll('#tabs button');
+  tabButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      tabButtons.forEach(function(b){ b.setAttribute('aria-selected','false'); });
+      btn.setAttribute('aria-selected','true');
+      document.querySelectorAll('section.panel').forEach(function(p){ p.classList.remove('active'); });
+      document.getElementById('panel-' + btn.dataset.panel).classList.add('active');
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+
+  
+  var diagrams = [{"t": "Reference ranges", "tag": "FIG. 1", "items": [["na", "Sodium", "135–145 mmol/L. Below = hyponatremia; above = hypernatremia."], ["k", "Potassium", "3.4–5.0 mmol/L. Below = hypokalemia; above = hyperkalemia."], ["ca", "Calcium", "Total 2.12–2.60 mmol/L; ionized 1.19–1.37 mmol/L."], ["p", "Phosphate", "0.80–1.44 mmol/L."], ["mg", "Magnesium", "0.7–1.00 mmol/L."]]}, {"t": "Types of edema", "tag": "FIG. 2", "items": [["per", "Peripheral", "Legs, feet, ankles; may involve arms. Pedal edema is limited to feet/lower legs."], ["lym", "Lymphedema", "May result from cancer treatment such as surgery and radiation."], ["pul", "Pulmonary", "Heart failure, or noncardiogenic causes: infection, ARDS, toxic exposures."], ["cer", "Cerebral", "Trauma, stroke or cancer."], ["oth", "Others", "Example: macular edema."]]}, {"t": "Causes of hypernatremia", "tag": "FIG. 3", "items": [["h", "Loss of hypotonic fluid", "Renal: loop/thiazide diuretics, osmotic diuresis, postobstructive diuresis, diuretic phase of ATN. Nonrenal: vomiting, diarrhea, GI drainage/fistulae, sweating, burns."], ["w", "Pure-water deficit", "Reduced water access/intake, neurologic or psychologic disease, respiratory water loss, AVP deficiency (diabetes insipidus)."], ["g", "Hypertonic sodium gain", "Hypertonic electrolyte solutions, sodium bicarbonate, sodium ingestion, sodium modeling in hemodialysis."], ["s", "Water shift into cells", "Extreme exercise or seizures due to increased intracellular osmoles."]]}, {"t": "Classification of hyponatremia", "tag": "FIG. 4", "items": [["iso", "Isotonic", "Hyponatremia with isotonic serum osmolality."], ["hyt", "Hypertonic", "Hyponatremia with hypertonic serum osmolality."], ["hypo", "Hypotonic — hypovolemic", "Loss of ECF volume and sodium; Na loss exceeds water loss; may occur with thiazides. Tx: 0.9% saline."], ["eu", "Hypotonic — euvolemic", "Normal/slightly decreased ECF sodium with increased total body water; commonly SIADH. Tx: 3% saline + loop diuretic."], ["hyper", "Hypotonic — hypervolemic", "Increased ECF volume with impaired renal Na/water excretion; cirrhosis, heart failure, nephrotic syndrome. Tx: 3% saline, fluid restriction, loop diuretic."]]}, {"t": "Hyperkalemia — treatment options", "tag": "FIG. 5", "items": [["d", "Dialysis", "Most rapid method to lower serum potassium."], ["c", "IV calcium", "Rapidly reverses ECG manifestations/arrhythmias but does not lower potassium."], ["i", "Insulin + dextrose / bicarbonate / salbutamol", "Shift potassium intracellularly."], ["b", "Potassium binders", "Suitable asymptomatic mild–moderate cases."], ["l", "Loop diuretics", "Increase renal potassium excretion."], ["m", "Magnesium sulfate", "Arrhythmias from digitalis toxicity in hyperkalemic patients."]]}, {"t": "Cells in different tonicity", "tag": "FIG. 6", "items": [["t1", "Hypotonic", "Solute concentration inside cell is HIGHER → water is transported into the cell → cells inflate and eventually burst."], ["t2", "Isotonic", "Solute concentration inside equals outside → water moved in = water moved out."], ["t3", "Hypertonic", "Solute concentration inside cell is LOWER → water is transported out → cells shrink."]]}];
+  var host = document.getElementById('diagHost');
+  diagrams.forEach(function(d, di){
+    var card = document.createElement('div'); card.className = 'diagram-card';
+    card.innerHTML = '<div class="diagram-head"><h3>' + d.t + '</h3><span class="tag">' + d.tag + '</span></div><div class="diagram-body"><div class="chips"></div><div class="caption-box"><span class="placeholder">Tap an item above.</span></div></div>';
+    var chips = card.querySelector('.chips'), cap = card.querySelector('.caption-box');
+    d.items.forEach(function(it){
+      var b = document.createElement('button'); b.className = 'chip'; b.textContent = it[1];
+      b.addEventListener('click', function(){
+        chips.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('active'); });
+        b.classList.add('active');
+        cap.innerHTML = '<span class="cap-title">' + it[1] + '</span>' + it[2];
+      });
+      chips.appendChild(b);
+    });
+    host.appendChild(card);
+  });
+  var mmSrc = `Normal Laboratory Ranges
+  Sodium: 135–145 mmol/L
+  Potassium: 3.4–5.0 mmol/L
+  Calcium
+    Total: 2.12–2.60 mmol/L
+    Ionized: 1.19–1.37 mmol/L
+  Phosphate: 0.80–1.44 mmol/L
+  Magnesium: 0.7–1.00 mmol/L
+Edema
+  Definition: clinically detectable ↑ interstitial fluid volume
+  Mechanism: excess Na retained
+    Impaired renal Na excretion
+    Reduced effective circulating volume
+  associated with|Common settings
+    ↓ Myocardial contractility
+    Nephrotic syndrome
+    Cirrhosis
+  divided into|Types
+    Peripheral edema
+      Legs, feet, ankles; may involve arms
+      Pedal edema: feet/lower legs only
+    Lymphedema
+      Cancer treatment: surgery, radiation
+    Pulmonary edema
+      Heart failure
+      Noncardiogenic: infection, ARDS, toxic exposures
+    Cerebral edema
+      Trauma, stroke, cancer
+    Others
+      Example: macular edema
+  Treatment
+    Na restriction + treat underlying disease
+    Diuretics = primary therapy
+      Loop diuretics: most potent
+      followed by|Thiazides
+      followed by|K-sparing diuretics
+Sodium Disorders
+  Hypernatremia
+    Definition: serum Na >145 mmol/L
+    causes|Water loss or hypotonic fluid loss
+    Less common: hypertonic fluid, Na ingestion
+    Symptoms
+      Weakness, lethargy, restlessness, irritability, confusion
+      Rapid onset: twitching, seizures, coma, death
+    Causes by mechanism
+      Loss of hypotonic fluid
+        Renal: loop/thiazide diuretics, osmotic diuresis, postobstructive diuresis, diuretic phase of ATN
+        Nonrenal: vomiting, diarrhea, GI drainage/fistulae, sweating, burns
+      Pure-water deficit
+        Reduced water access/intake; neurologic or psychologic disease
+        Respiratory water loss
+        AVP deficiency (diabetes insipidus)
+      Hypertonic sodium gain
+        Hypertonic electrolyte solutions, Na bicarbonate, Na ingestion
+        Sodium modeling in hemodialysis
+      Water shift into cells
+        Extreme exercise or seizures: ↑ intracellular osmoles
+    Diagnostic evaluation
+      Serum electrolytes: Na⁺, K⁺, Ca²⁺
+      Glucose
+      Kidney function: urea, creatinine
+      Urine electrolytes: Na⁺, K⁺
+      Urine and plasma osmolality: nonrenal vs renal water loss
+      Urine output: 24-h volume; polyuria → evaluate diabetes insipidus
+      Plasma AVP: central vs nephrogenic DI
+    Treatment
+      Identify cause; correct volume, then hypertonicity
+      Hypovolemic: 0.9% saline first
+        followed by|Free-water deficit: 5% dextrose or 0.45% saline
+      Central DI: desmopressin
+      Nephrogenic DI: thiazide + dietary Na restriction
+      Sodium overload: loop diuretics + 5% dextrose
+  Hyponatremia
+    Definition: serum Na <135 mmol/L
+    divided into|Severity
+      Mild: 130–134
+      Moderate: 125–129
+      Profound: <125
+    Mechanism: excess ECF water relative to Na (impaired water excretion)
+    causes|Non-osmotic AVP release
+      Hypovolemia, CHF, nephrosis, cirrhosis
+      SIADH (inappropriate antidiuretic hormone secretion)
+    Severity depends on magnitude and rapidity of onset
+    Tonicity and red blood cells
+      Hypotonic: water enters; cells inflate and may burst
+      Isotonic: water in = water out
+      Hypertonic: water leaves; cells shrink
+    classified into|Classification
+      Isotonic: isotonic serum osmolality
+      Hypertonic: hypertonic serum osmolality
+      Hypotonic, hypovolemic
+        Loss of ECF volume and Na; Na loss exceeds water loss
+        Example: thiazides
+      Hypotonic, euvolemic
+        Normal/slightly ↓ ECF Na; ↑ total body water
+        Example: SIADH
+      Hypotonic, hypervolemic
+        ↑ ECF volume; impaired renal Na/water excretion
+        Examples: cirrhosis, heart failure, nephrotic syndrome
+    Essential lab tests
+      Urine osmolality: impaired free-water excretion vs primary polydipsia
+      Serum osmolality: true vs pseudohyponatremia or hypertonic
+      Urinary Na: hypovolemic hyponatremia vs SIADH
+    Treatment
+      Severe symptoms: 100 mL 3% NaCl IV over 10 min, up to ×3
+      Mild–moderate, low herniation risk: 3% NaCl 0.5–2 mL/kg/h
+      Avoid overly rapid correction: osmotic demyelination risk
+      SIADH: 3% saline + loop diuretic
+        Selected cases: NaCl/urea tablets, demeclocycline, vaptans
+      Hypovolemic hypotonic: 0.9% saline
+      Hypervolemic hypotonic: 3% saline, fluid restriction, loop diuretic
+Potassium Disorders
+  Hypokalemia
+    Definition: serum K <3.5 mEq/L
+    divided into|Severity
+      Moderate: 2.5–3.0
+      Severe: <2.5
+    Mechanism: total-body K deficit or shift into cells
+    causes|Common causes
+      Loop/thiazide diuretics, diarrhea, vomiting, hypomagnesemia
+    Clinical features
+      Moderate: muscle weakness, cramping, malaise, myalgia
+      Severe: arrhythmias, ECG changes
+    Drug-induced
+      Transcellular shift: tocolytics, theophylline, caffeine, insulin overdose
+      Enhanced renal excretion: diuretics, high-dose penicillins, mineralocorticoids, aminoglycosides, amphotericin B, cisplatin
+      Enhanced fecal elimination: laxatives, sorbitol
+    Treatment
+      Mild deficit in chronic loop/thiazide use: 40–100 mEq K
+      Oral KCl preferred
+      IV K: severe, symptomatic, or oral not tolerated
+      IV K in saline: dextrose may stimulate insulin and worsen intracellular shift
+  Hyperkalemia
+    Definition: serum K >5 mEq/L
+    Develops when intake exceeds excretion or distribution is disturbed
+    Mechanisms
+      ↑ Intake
+      ↓ Excretion
+      Tubular unresponsiveness to aldosterone
+      Redistribution to extracellular space
+    Often asymptomatic; palpitations, ECG changes
+    Treatment options
+      Dialysis: most rapid way to lower K
+      IV calcium: reverses ECG changes/arrhythmias, does not lower K
+      Insulin + dextrose / bicarbonate / salbutamol: shift K into cells
+      K binders: suitable asymptomatic mild–moderate cases
+      Loop diuretics: ↑ renal K excretion
+      Magnesium sulfate: arrhythmias from digitalis toxicity
+Calcium Disorders
+  Hypocalcemia
+    Definition: total Ca <8.5 mg/dL (<2.13 mmol/L)
+    Mechanism: altered PTH and vitamin D effects on bone, gut, kidney
+    causes|Primary causes
+      Postoperative hypoparathyroidism
+      Vitamin D deficiency
+    Tetany: hallmark of acute hypocalcemia; prolonged QT
+    Treatment
+      Acute symptomatic: IV calcium salts (gluconate preferred peripherally, less irritating)
+      With hypomagnesemia: Mg supplementation
+      Chronic: oral calcium; add vitamin D if not normalized
+      Selected cases: recombinant human PTH
+  Hypercalcemia
+    Definition: total Ca >10.5 mg/dL (>2.62 mmol/L)
+    Most common causes: cancer, hyperparathyroidism
+    Mechanisms
+      ↑ Bone resorption
+      ↑ GI absorption
+      ↑ Renal tubular reabsorption
+    Malignancy-associated: anorexia, nausea, vomiting, constipation, polyuria, polydipsia, nocturia
+    Treatment
+      Mild–moderate, asymptomatic: treat cause, correct fluid/electrolytes
+      Crisis: normal saline rehydration
+        followed by|Loop diuretics in appropriate patients
+      Saline contraindicated: calcitonin
+      Malignancy-associated: bisphosphonates
+        followed by|Denosumab after suboptimal response
+      Parathyroid carcinoma: cinacalcet
+      Corticosteroids: ↓ GI Ca absorption (myeloma, leukemia, lymphoma, sarcoidosis, hypervitaminosis A/D)
+Magnesium Disorders
+  Hypomagnesemia
+    Definition: serum Mg <1.4 mEq/L (<0.70 mmol/L)
+    causes|GI or renal disorders, drugs, alcoholism
+    Most affected: neuromuscular and cardiovascular; ventricular arrhythmias
+    associated with|May coexist: hypokalemia, hypocalcemia
+    Treatment
+      Severe / limited venous access: IM (painful)
+      <1 mEq/L or symptomatic: IV
+      >1 mEq/L: oral (sustained-release may improve tolerance)
+      Renal insufficiency: reduce dose
+      Avoid urinary K loss: amiloride, spironolactone, triamterene
+  Hypermagnesemia
+    Definition: serum Mg >2 mEq/L (>1 mmol/L)
+    Usually: reduced GFR / advanced CKD
+    Other causes: Mg antacids, nutrition support, eclampsia treatment, lithium, hypothyroidism, Addison disease
+    Effects
+      Sedation, hyporeflexia, coma, paralysis, respiratory depression
+      Cardiovascular: hypotension and bradycardia
+    Treatment
+      IV calcium: antagonizes Mg effects
+      0.45% NaCl + loop diuretic: ↑ Mg elimination (adequate renal function)
+      Dialysis: Mg-free dialysate
+      Glucose + insulin: Mg into cells; glucose prevents hypoglycemia
+Phosphate Disorders
+  Hyperphosphatemia
+    Definition: serum phosphorus >4.5 mg/dL (>1.45 mmol/L)
+    Most common: ↓ phosphorus excretion (decreased GFR)
+    Intracellular release: rhabdomyolysis, hemolysis, tumor lysis syndrome
+    leads to|Hypocalcemia and Ca-phosphate precipitation in tissues
+    Treatment
+      Reduce GI absorption: aluminum salts, calcium carbonate
+      Non-calcium / non-aluminum binders: sevelamer, lanthanum carbonate, sucroferric oxyhydroxide, ferric citrate
+      Severe with tetany: IV calcium salts
+      Increase renal excretion: loop diuretics, acetazolamide
+  Hypophosphatemia
+    Definition: serum phosphorus <2 mg/dL (<0.65 mmol/L)
+    Mechanisms
+      ↓ GI absorption
+      Reduced tubular reabsorption
+      ECF-to-ICF redistribution
+    associated with|Inadequate parenteral nutrition phosphate, alcoholism, chronic antacids, DKA, prolonged hyperventilation
+    Severe manifestations
+      Neurologic: irritability, weakness, numbness, paresthesias, dysarthria, confusion, seizures, coma
+      Skeletal muscle: myalgia, bone pain, weakness, rhabdomyolysis
+      Respiratory: muscle weakness, diaphragmatic dysfunction, acute respiratory failure
+      Others: cardiomyopathy, arrhythmias, hemolysis, ↑ infection risk
+      Chronic: osteopenia, osteomalacia
+    Treatment
+      Mild–moderate/asymptomatic: oral phosphorus
+      Severe/symptomatic: IV phosphorus
+      Monitor phosphorus and calcium (renal dysfunction, IV replacement)
+      Vitamin D: ↑ intestinal and renal phosphate absorption
+      Burosumab: X-linked hypophosphatemia (adults, children ≥6 months)
+Cross-Topic Relationships
+  Cirrhosis, heart failure, nephrotic syndrome
+    associated with|Edema
+    associated with|Hypervolemic hypotonic hyponatremia
+  Loop/thiazide diuretics
+    causes|Hypernatremia (renal hypotonic fluid loss)
+    causes|Hypokalemia
+    associated with|Hypovolemic hypotonic hyponatremia (thiazides)
+  Hypomagnesemia
+    causes|Hypokalemia
+    associated with|Hypocalcemia (Mg supplementation needed)
+  Hyperphosphatemia
+    leads to|Hypocalcemia
+  AVP deficiency (diabetes insipidus)
+    causes|Hypernatremia
+  Insulin
+    causes|Hypokalemia (overdose, K shift)
+    Treats hyperkalemia (K into cells)
+  IV calcium
+    Hyperkalemia: reverses ECG changes
+    Hypermagnesemia: antagonizes Mg effects
+    Hyperphosphatemia with tetany
+  Alcoholism
+    associated with|Hypomagnesemia
+    associated with|Hypophosphatemia
+`;
+  function mmParse(t){
+    var root={c:[]}, st=[{d:-1,n:root}];
+    t.split('\n').forEach(function(l){
+      if(!l.trim()) return;
+      var d=l.match(/^ */)[0].length/2, s=l.trim(), r='', i=s.indexOf('|');
+      if(i>0){ r=s.slice(0,i); s=s.slice(i+1); }
+      var n={t:s,r:r,c:[]};
+      while(st[st.length-1].d>=d) st.pop();
+      st[st.length-1].n.c.push(n); st.push({d:d,n:n});
+    });
+    return root.c;
+  }
+  var mmTree = document.getElementById('mmTree');
+  function mmNode(n,d){
+    var w=document.createElement('div'); w.className='mm-node d'+Math.min(d,3);
+    var b=document.createElement('button'); b.className='mm-row'; b.type='button';
+    if(n.r){ var r=document.createElement('span'); r.className='mm-rel'; r.textContent=n.r; b.appendChild(r); }
+    var x=document.createElement('span'); x.className='mm-txt'; x.textContent=n.t; b.appendChild(x);
+    w.appendChild(b);
+    if(n.c.length){
+      var c=document.createElement('span'); c.className='mm-cnt'; c.textContent=n.c.length; b.appendChild(c);
+      var v=document.createElement('span'); v.className='mm-chev'; v.textContent='›'; b.appendChild(v);
+      var k=document.createElement('div'); k.className='mm-kids'; k.hidden=true;
+      n.c.forEach(function(ch){ k.appendChild(mmNode(ch,d+1)); });
+      w.appendChild(k); b.setAttribute('aria-expanded','false');
+      b.addEventListener('click',function(){ mmSet(w,k.hidden); });
+    } else b.classList.add('leaf');
+    return w;
+  }
+  function mmSet(w,open){
+    var k=w.querySelector(':scope > .mm-kids'); if(!k) return;
+    k.hidden=!open; w.classList.toggle('open',open);
+    w.querySelector(':scope > .mm-row').setAttribute('aria-expanded',open);
+  }
+  var mmRoot = mmNode({t:'Fluid and Electrolyte Homeostasis',r:'',c:mmParse(mmSrc)},0);
+  mmTree.appendChild(mmRoot); mmSet(mmRoot,true);
+  document.getElementById('mmExpand').addEventListener('click',function(){ mmTree.querySelectorAll('.mm-node').forEach(function(w){ mmSet(w,true); }); });
+  document.getElementById('mmCollapse').addEventListener('click',function(){ mmTree.querySelectorAll('.mm-node').forEach(function(w){ mmSet(w,false); }); mmSet(mmRoot,true); });
+
+  
+  var flashcards = [{"l": 1, "n": 1, "cat": "Lab ranges", "term": "What is the normal serum sodium range?", "def": "135–145 mmol/L.", "exp": "Sodium is the first entry in the Normal Laboratory Ranges table; hypernatremia is defined above 145 and hyponatremia below 135."}, {"l": 1, "n": 2, "cat": "Lab ranges", "term": "What is the normal serum potassium range?", "def": "3.4–5.0 mmol/L.", "exp": "Hypokalemia is defined as serum K below 3.5 mEq/L and hyperkalemia as above 5 mEq/L, just outside this range."}, {"l": 1, "n": 3, "cat": "Lab ranges", "term": "Give the reference ranges for total and ionized calcium.", "def": "• Total: 2.12–2.60 mmol/L<br>• Ionized: 1.19–1.37 mmol/L", "exp": "Hypocalcemia is defined by total serum calcium &lt;8.5 mg/dL (&lt;2.13 mmol/L) and hypercalcemia by &gt;10.5 mg/dL (&gt;2.62 mmol/L)."}, {"l": 1, "n": 4, "cat": "Lab ranges", "term": "Give the reference ranges for phosphate and magnesium.", "def": "• Phosphate: 0.80–1.44 mmol/L<br>• Magnesium: 0.7–1.00 mmol/L", "exp": "These two ranges anchor the definitions of hypo/hyperphosphatemia and hypo/hypermagnesemia later in the lecture."}, {"l": 1, "n": 5, "cat": "Edema", "term": "Define edema.", "def": "Clinically detectable increase in interstitial fluid volume.", "exp": "The key word is interstitial: edema is excess fluid in the interstitial compartment."}, {"l": 1, "n": 6, "cat": "Edema", "term": "When does edema develop?", "def": "When excess sodium is retained, either from impaired renal sodium excretion or from reduced effective circulating volume.", "exp": "Sodium retention is the common pathway, reached by two different routes (kidney excretion problem or low effective circulating volume)."}, {"l": 1, "n": 7, "cat": "Edema", "term": "Name the common clinical settings of edema.", "def": "• Decreased myocardial contractility<br>• Nephrotic syndrome<br>• Cirrhosis", "exp": "These are conditions in which sodium excretion is impaired or effective circulating volume is reduced."}, {"l": 1, "n": 8, "cat": "Edema", "term": "Which type of edema is limited to the feet/lower legs?", "def": "Pedal edema.", "exp": "Peripheral edema usually affects legs, feet and ankles and may involve the arms; pedal edema is the narrower form limited to the feet/lower legs."}, {"l": 1, "n": 9, "cat": "Edema", "term": "What is the primary therapy for edema, and which class is most potent?", "def": "• Diuretics are the primary therapy<br>• Loop diuretics are most potent, followed by thiazides and potassium-sparing diuretics<br>• Also: sodium restriction and correction of the underlying disease", "exp": "Treatment targets sodium retention (restriction + diuretics) and the disease that caused it."}, {"l": 1, "n": 10, "cat": "Hypernatremia", "term": "Define hypernatremia and give its usual cause.", "def": "Serum sodium &gt;145 mmol/L, usually from water loss or hypotonic fluid loss; less commonly from hypertonic fluid administration or sodium ingestion.", "exp": "Most hypernatremia is a water problem (loss of water/hypotonic fluid) rather than a sodium-gain problem."}, {"l": 1, "n": 11, "cat": "Hypernatremia", "term": "List the neurologic symptoms of hypernatremia.", "def": "• Weakness<br>• Lethargy<br>• Restlessness<br>• Irritability<br>• Confusion", "exp": "Rapidly developing hypernatremia can progress to twitching, seizures, coma and death."}, {"l": 1, "n": 12, "cat": "Hypernatremia", "term": "What is the treatment of central diabetes insipidus?", "def": "Desmopressin.", "exp": "Nephrogenic DI is treated differently (thiazide diuretic plus dietary sodium restriction)."}, {"l": 1, "n": 13, "cat": "Hyponatremia", "term": "Define hyponatremia and give its severity grades.", "def": "• Serum sodium &lt;135 mmol/L<br>• Mild: 130–134<br>• Moderate: 125–129<br>• Profound: &lt;125 mmol/L", "exp": "Severity also depends on the magnitude and rapidity of onset."}, {"l": 1, "n": 14, "cat": "Hyponatremia", "term": "Which test helps distinguish hypovolemic hyponatremia from SIADH?", "def": "Urinary sodium concentration.", "exp": "Urine osmolality and serum osmolality answer different questions (see the medium cards)."}, {"l": 1, "n": 15, "cat": "Hypokalemia", "term": "Define hypokalemia and give its severity grades.", "def": "• Serum potassium &lt;3.5 mEq/L<br>• Moderate: 2.5–3.0<br>• Severe: &lt;2.5", "exp": "It results from a total-body potassium deficit or a shift of potassium into cells."}, {"l": 1, "n": 16, "cat": "Hypokalemia", "term": "Which route of potassium replacement is preferred whenever possible?", "def": "Oral potassium chloride.", "exp": "IV potassium is reserved for severe hypokalemia, symptoms, or inability to tolerate oral therapy."}, {"l": 1, "n": 17, "cat": "Hyperkalemia", "term": "Define hyperkalemia.", "def": "Serum potassium &gt;5 mEq/L (&gt;5 mmol/L).", "exp": "It develops when potassium intake exceeds excretion or transcellular distribution is disturbed; it is often asymptomatic."}, {"l": 1, "n": 18, "cat": "Hyperkalemia", "term": "What is the most rapid method to lower serum potassium?", "def": "Dialysis.", "exp": "IV calcium acts quickly on the ECG but does not lower potassium."}, {"l": 1, "n": 19, "cat": "Hypocalcemia", "term": "What is the hallmark of acute hypocalcemia?", "def": "Tetany (prolonged QT may also occur).", "exp": "Hypocalcemia results from altered effects of PTH and vitamin D on bone, gut and kidney; primary causes are postoperative hypoparathyroidism and vitamin D deficiency."}, {"l": 1, "n": 20, "cat": "Hypercalcemia", "term": "What are the most common causes of hypercalcemia?", "def": "• Cancer<br>• Hyperparathyroidism", "exp": "Hypercalcemia is defined as total serum calcium &gt;10.5 mg/dL (&gt;2.62 mmol/L)."}, {"l": 1, "n": 21, "cat": "Hypomagnesemia", "term": "Define hypomagnesemia and name its commonly associated condition.", "def": "Serum magnesium &lt;1.4 mEq/L (&lt;0.70 mmol/L); commonly associated with alcoholism.", "exp": "It is caused by GI or renal disorders and several drugs, and mainly affects the neuromuscular and cardiovascular systems."}, {"l": 1, "n": 22, "cat": "Hypermagnesemia", "term": "Define hypermagnesemia and give its usual association.", "def": "Serum magnesium &gt;2 mEq/L (&gt;1 mmol/L); usually associated with reduced GFR/advanced CKD.", "exp": "Other causes: magnesium-containing antacids, nutrition support, eclampsia treatment, lithium, hypothyroidism and Addison disease."}, {"l": 1, "n": 23, "cat": "Hyperphosphatemia", "term": "Define hyperphosphatemia and give its most common cause.", "def": "Serum phosphorus &gt;4.5 mg/dL (&gt;1.45 mmol/L); most commonly due to reduced phosphorus excretion from decreased GFR.", "exp": "Intracellular phosphate release (rhabdomyolysis, hemolysis, tumor lysis syndrome) is the other mechanism."}, {"l": 1, "n": 24, "cat": "Hypophosphatemia", "term": "Define hypophosphatemia.", "def": "Serum phosphorus &lt;2 mg/dL (&lt;0.65 mmol/L).", "exp": "It results from decreased GI absorption, reduced tubular reabsorption, or extracellular-to-intracellular redistribution."}, {"l": 1, "n": 25, "cat": "Hypophosphatemia", "term": "Burosumab is indicated for which condition?", "def": "X-linked hypophosphatemia in adults and children aged 6 months or older.", "exp": "It is listed among the hypophosphatemia treatments alongside oral/IV phosphorus and vitamin D."}, {"l": 2, "n": 26, "cat": "Edema", "term": "Match each edema type with its stated cause: lymphedema, pulmonary edema, cerebral edema.", "def": "• Lymphedema: cancer treatment such as surgery and radiation<br>• Pulmonary edema: heart failure or noncardiogenic causes (infection, ARDS, toxic exposures)<br>• Cerebral edema: trauma, stroke or cancer", "exp": "Macular edema is given as an example of the \"others\" group."}, {"l": 2, "n": 27, "cat": "Tonicity", "term": "Compare what happens to red blood cells in hypotonic, isotonic and hypertonic solutions.", "def": "• Hypotonic: water moves into the cell (solute inside is higher); cells inflate and eventually burst<br>• Isotonic: water in = water out; solute inside equals outside<br>• Hypertonic: water moves out (solute inside is lower); cells shrink", "exp": "Direction of water movement follows the solute concentration difference across the cell membrane."}, {"l": 2, "n": 28, "cat": "Hypernatremia", "term": "List the four mechanisms of hypernatremia with an example of each.", "def": "• Loss of hypotonic fluid: e.g., loop/thiazide diuretics, vomiting, diarrhea, burns<br>• Pure-water deficit: e.g., reduced water intake, diabetes insipidus (AVP deficiency)<br>• Hypertonic sodium gain: e.g., hypertonic electrolyte solutions, sodium bicarbonate, sodium ingestion<br>• Water shift into cells: extreme exercise or seizures (increased intracellular osmoles)", "exp": "Loss of hypotonic fluid is further divided into renal (diuretics, osmotic/postobstructive diuresis, diuretic phase of ATN) and nonrenal (GI, sweating, burns) causes."}, {"l": 2, "n": 29, "cat": "Hypernatremia", "term": "In hypernatremia work-up, which tests separate nonrenal from renal water loss, and which prompts evaluation for diabetes insipidus?", "def": "• Urine &amp; plasma osmolality: distinguish nonrenal causes from renal water loss<br>• 24-hour urine volume: polyuria prompts evaluation for diabetes insipidus<br>• Plasma AVP (if indicated): distinguishes central from nephrogenic DI", "exp": "Other tests: serum electrolytes, glucose, kidney function (urea, creatinine) and urine electrolytes."}, {"l": 2, "n": 30, "cat": "Hypernatremia", "term": "What is the treatment sequence in hypovolemic hypernatremia?", "def": "Correct the volume disturbance first with 0.9% saline; after stabilization replace the free-water deficit with 5% dextrose or 0.45% saline.", "exp": "General principle: correct volume disturbance, then correct hypertonicity."}, {"l": 2, "n": 31, "cat": "Hypernatremia", "term": "Contrast the treatment of central vs nephrogenic diabetes insipidus, and of sodium overload.", "def": "• Central DI: desmopressin<br>• Nephrogenic DI: thiazide diuretic plus dietary sodium restriction<br>• Sodium overload: loop diuretics plus 5% dextrose", "exp": "The choice depends on the mechanism: AVP deficiency vs kidney unresponsiveness vs sodium excess."}, {"l": 2, "n": 32, "cat": "Hyponatremia", "term": "Classify hyponatremia and state which type is commonly SIADH.", "def": "• Isotonic and hypertonic (by serum osmolality)<br>• Hypotonic–hypovolemic: sodium loss exceeds water loss (e.g., thiazides)<br>• Hypotonic–euvolemic: normal/slightly decreased ECF sodium with increased total body water; commonly SIADH<br>• Hypotonic–hypervolemic: increased ECF volume with impaired renal sodium/water excretion (cirrhosis, heart failure, nephrotic syndrome)", "exp": "SIADH belongs to the euvolemic hypotonic group."}, {"l": 2, "n": 33, "cat": "Hyponatremia", "term": "What question does each test answer: serum osmolality vs urine osmolality?", "def": "• Serum osmolality: true hyponatremia vs pseudohyponatremia/hypertonic hyponatremia<br>• Urine osmolality: impaired free-water excretion vs primary polydipsia", "exp": "Urinary sodium concentration adds a third discriminator (hypovolemic hyponatremia vs SIADH)."}, {"l": 2, "n": 34, "cat": "Hyponatremia", "term": "Match the hyponatremia type with its treatment: hypovolemic hypotonic, hypervolemic hypotonic, SIADH.", "def": "• Hypovolemic hypotonic: 0.9% saline<br>• Hypervolemic hypotonic: 3% saline, fluid restriction and loop diuretic<br>• SIADH: 3% saline plus a loop diuretic (selected cases: NaCl/urea tablets, demeclocycline or vaptans)", "exp": "Treatment follows the volume status/mechanism."}, {"l": 2, "n": 35, "cat": "Hypokalemia", "term": "List the mechanisms of drug-induced hypokalemia with examples.", "def": "• Transcellular shift: tocolytic agents, theophylline, caffeine, insulin overdose<br>• Enhanced renal excretion: diuretics, high-dose penicillins, mineralocorticoids, aminoglycosides, amphotericin B, cisplatin<br>• Enhanced fecal elimination: laxatives, sorbitol", "exp": "These map onto the two general mechanisms: shift into cells vs total-body loss."}, {"l": 2, "n": 36, "cat": "Hypokalemia", "term": "Why should IV potassium be given in saline rather than dextrose?", "def": "Dextrose may stimulate insulin and worsen the intracellular potassium shift.", "exp": "Insulin drives potassium into cells, lowering serum K further."}, {"l": 2, "n": 37, "cat": "Hyperkalemia", "term": "Differentiate IV calcium from insulin + dextrose/bicarbonate/salbutamol in hyperkalemia.", "def": "• IV calcium: rapidly reverses ECG manifestations/arrhythmias but does not lower potassium<br>• Insulin + dextrose / bicarbonate / salbutamol: shift potassium intracellularly", "exp": "Other options: dialysis (most rapid lowering), potassium binders (asymptomatic mild–moderate), loop diuretics (renal excretion)."}, {"l": 2, "n": 38, "cat": "Hypocalcemia", "term": "Compare the management of acute symptomatic vs chronic hypocalcemia.", "def": "• Acute symptomatic: IV soluble calcium salts; calcium gluconate preferred peripherally because it is less irritating<br>• Chronic: oral calcium; add vitamin D if calcium does not normalize<br>• Associated hypomagnesemia: magnesium supplementation; selected cases: recombinant human PTH", "exp": "Treatment depends on urgency and on any associated disturbance."}, {"l": 2, "n": 39, "cat": "Hypercalcemia", "term": "Match the situation with the hypercalcemia treatment.", "def": "• Mild–moderate, asymptomatic: treat underlying condition, correct fluid/electrolytes<br>• Crisis/acute symptomatic: normal saline rehydration then loop diuretics<br>• If saline contraindicated: calcitonin<br>• Malignancy-associated: bisphosphonates (denosumab after suboptimal response)<br>• Parathyroid carcinoma: cinacalcet", "exp": "Corticosteroids may reduce GI calcium absorption in myeloma, leukemia, lymphoma, sarcoidosis and hypervitaminosis A/D."}, {"l": 2, "n": 40, "cat": "Hyperphosphatemia", "term": "List the treatment approaches for hyperphosphatemia.", "def": "• Reduce GI absorption: phosphate binders (aluminum salts, calcium carbonate)<br>• Non-calcium/non-aluminum binders: sevelamer, lanthanum carbonate, sucroferric oxyhydroxide, ferric citrate<br>• Severe symptomatic with tetany: IV calcium salts<br>• Increase renal excretion: loop diuretics or carbonic anhydrase inhibitors such as acetazolamide", "exp": "Tetany reflects the hypocalcemia that accompanies hyperphosphatemia."}, {"l": 3, "n": 41, "cat": "Hyponatremia", "term": "A cirrhotic patient has hypotonic hyponatremia with increased ECF volume. Classify it, explain the mechanism and give the treatment.", "def": "• Hypotonic–hypervolemic hyponatremia<br>• Increased ECF volume with impaired renal sodium/water excretion; non-osmotic AVP release in cirrhosis contributes<br>• Treatment: 3% saline, fluid restriction and loop diuretic", "exp": "Compare with hypovolemic hypotonic hyponatremia, where 0.9% saline is used."}, {"l": 3, "n": 42, "cat": "Hyponatremia", "term": "A patient on thiazides has lost more sodium than water, with ECF volume loss. Classify the hyponatremia, name the test that separates it from SIADH, and give the treatment.", "def": "• Hypotonic–hypovolemic hyponatremia<br>• Test: urinary sodium concentration<br>• Treatment: 0.9% saline", "exp": "SIADH is euvolemic with increased total body water; here sodium loss exceeds water loss."}, {"l": 3, "n": 43, "cat": "Hypernatremia", "term": "A hypernatremic patient has marked polyuria. Outline the work-up and how the specific diagnosis determines treatment.", "def": "• 24-hour urine volume: polyuria prompts evaluation for diabetes insipidus<br>• Urine &amp; plasma osmolality separate nonrenal from renal water loss; plasma AVP distinguishes central from nephrogenic DI<br>• Central DI: desmopressin<br>• Nephrogenic DI: thiazide diuretic plus dietary sodium restriction", "exp": "AVP deficiency (diabetes insipidus) is a pure-water-deficit mechanism of hypernatremia."}, {"l": 3, "n": 44, "cat": "Hyponatremia", "term": "A hyponatremic patient has severe symptoms. Give the regimen and the main correction risk; what changes at low herniation risk?", "def": "• Severe symptoms: 100 mL of 3% NaCl IV over 10 minutes, repeated up to ×3 as needed<br>• Mild–moderate symptoms at low herniation risk: 3% NaCl at 0.5–2 mL/kg/h<br>• Risk: overly rapid correction → osmotic demyelination", "exp": "Severity depends on magnitude and rapidity of onset, so symptoms guide treatment intensity."}, {"l": 3, "n": 45, "cat": "Electrolyte links", "term": "Which relationships among hypokalemia, hypomagnesemia and hypocalcemia are stated, and what does this mean for treatment?", "def": "• Hypomagnesemia is a common cause of hypokalemia and may coexist with hypokalemia and hypocalcemia<br>• Hypocalcemia with associated hypomagnesemia: magnesium supplementation<br>• Hypomagnesemia: IV Mg if &lt;1 mEq/L or symptomatic, oral if &gt;1 mEq/L; avoid urinary K loss with amiloride, spironolactone or triamterene", "exp": "Correcting magnesium is needed alongside potassium/calcium replacement."}, {"l": 3, "n": 46, "cat": "Hyperphosphatemia", "term": "Explain how rhabdomyolysis or tumor lysis syndrome leads to hypocalcemia/tetany, and how severe cases are treated.", "def": "• Intracellular phosphate release (rhabdomyolysis, hemolysis, tumor lysis) raises serum phosphate<br>• Major effects: hypocalcemia and calcium-phosphate precipitation in tissues<br>• Severe symptomatic with tetany: IV calcium salts", "exp": "Hyperphosphatemia is mainly harmful via its calcium effects."}, {"l": 3, "n": 47, "cat": "Hyperkalemia", "term": "A hyperkalemic patient has ECG arrhythmias, and another has digitalis-toxicity arrhythmias. Which agent reverses the ECG, which lowers K fastest, and which treats the digitalis arrhythmia?", "def": "• Reverses ECG/arrhythmias without lowering K: IV calcium<br>• Most rapid lowering of serum potassium: dialysis<br>• Digitalis-toxicity arrhythmias in hyperkalemic patients: magnesium sulfate", "exp": "Different agents act on the ECG, on serum K, and on a specific arrhythmia."}, {"l": 3, "n": 48, "cat": "Hypermagnesemia", "term": "A CKD patient on magnesium-containing antacids has sedation, hyporeflexia, hypotension and bradycardia. Identify the problem and choose the treatments, noting which depends on renal function.", "def": "• Hypermagnesemia (&gt;2 mEq/L), usually from reduced GFR/advanced CKD<br>• IV calcium: antagonizes neuromuscular and cardiovascular effects<br>• 0.45% NaCl + loop diuretic: promotes Mg elimination only with adequate renal function<br>• Dialysis patients: magnesium-free dialysate; glucose + insulin may promote Mg entry into cells", "exp": "Magnesium elimination in saline + loop diuretic needs adequate renal function."}, {"l": 3, "n": 49, "cat": "Hypophosphatemia", "term": "A chronic alcoholic on parenteral nutrition has severe hypophosphatemia. Explain the causes, systems affected and treatment.", "def": "• Causes: inadequate phosphate in parenteral nutrition, chronic alcoholism<br>• Neurologic: irritability, weakness, paresthesias, confusion, seizures, coma; muscle: rhabdomyolysis; respiratory failure; cardiomyopathy, arrhythmias, hemolysis, infection risk<br>• Treatment: IV phosphorus (severe/symptomatic), frequent monitoring of phosphorus and calcium", "exp": "Chronic hypophosphatemia: osteopenia and osteomalacia."}, {"l": 3, "n": 50, "cat": "Hypercalcemia", "term": "A cancer patient has anorexia, vomiting, constipation, polyuria, polydipsia and nocturia. Identify the problem, mechanisms and treatment, including when saline cannot be used.", "def": "• Malignancy-associated hypercalcemia (&gt;10.5 mg/dL)<br>• Mechanisms: increased bone resorption, GI absorption and renal tubular reabsorption<br>• Crisis: normal saline rehydration then loop diuretics; saline contraindicated: calcitonin<br>• Bisphosphonates; denosumab after suboptimal bisphosphonate response", "exp": "Cancer and hyperparathyroidism are the most common causes of hypercalcemia."}];
+var fcGrid = document.getElementById('fcGrid');
+  var fcLevels = document.getElementById('fcLevels');
+  var fcCount = document.getElementById('fcCount');
+  var levelLabels = {1:"Level 1 · Easy", 2:"Level 2 · Medium", 3:"Level 3 · Hard"};
+  var fcLevel = 1;
+  var activeCat = "All";
+
+  function cardsForLevel(l){ return flashcards.filter(function(f){ return f.l === l; }); }
+
+  [1,2,3].forEach(function(l){
+    var b = document.createElement('button');
+    b.className = 'fc-filter' + (l===1 ? ' active' : '');
+    b.textContent = levelLabels[l] + ' (' + cardsForLevel(l).length + ')';
+    b.addEventListener('click', function(){
+      fcLevel = l; activeCat = "All";
+      fcLevels.querySelectorAll('.fc-filter').forEach(function(f){ f.classList.remove('active'); });
+      b.classList.add('active');
+      renderFlashcards();
+    });
+    fcLevels.appendChild(b);
+  });
+
+  function renderFlashcards(){
+    fcGrid.innerHTML = '';
+    fcGrid.classList.add('tall');
+    var base = cardsForLevel(fcLevel);
+    var list = activeCat === 'All' ? base : base.filter(function(f){ return f.cat === activeCat; });
+    fcCount.textContent = list.length + ' cards · ' + levelLabels[fcLevel];
+    list.forEach(function(f){
+      var card = document.createElement('div');
+      card.className = 'fc-card';
+      card.innerHTML =
+        '<div class="fc-inner">' +
+          '<div class="fc-face fc-front"><span class="fc-tab">Card ' + (f.n<10?'0':'') + f.n + ' · ' + f.cat + '</span><span class="fc-term long">' + f.term + '</span><span class="fc-flip-hint">tap to flip</span></div>' +
+          '<div class="fc-face fc-back"><span class="fc-tab">Answer</span><span class="fc-def">' + f.def + '<span class="fc-exp"><b>Explanation:</b> ' + f.exp + '</span></span><span class="fc-flip-hint">tap to flip back</span></div>' +
+        '</div>';
+      card.addEventListener('click', function(){ card.classList.toggle('flipped'); });
+      fcGrid.appendChild(card);
+    });
+  }
+  renderFlashcards();
+
+  
+  var quizBank = {"1": [{"q": "Edema is defined as a clinically detectable increase in which fluid volume?", "c": "Interstitial fluid volume", "w": ["Intracellular fluid volume", "Intravascular plasma volume", "Urinary fluid volume"], "e": "Edema is a clinically detectable increase in interstitial fluid volume."}, {"q": "What is the normal serum potassium reference range?", "c": "3.4–5.0 mmol/L", "w": ["135–145 mmol/L", "0.80–1.44 mmol/L", "0.7–1.00 mmol/L"], "e": "The lab-range table gives potassium as 3.4–5.0 mmol/L; 135–145 is sodium, 0.80–1.44 phosphate and 0.7–1.00 magnesium."}, {"q": "What is the normal reference range for ionized calcium?", "c": "1.19–1.37 mmol/L", "w": ["2.12–2.60 mmol/L", "0.80–1.44 mmol/L", "0.7–1.00 mmol/L"], "e": "Ionized calcium is 1.19–1.37 mmol/L; 2.12–2.60 mmol/L is the range for total calcium."}, {"q": "Which of the following is a common clinical setting for edema?", "c": "Nephrotic syndrome", "w": ["Diabetes insipidus", "Diarrhea with GI fluid loss", "Extensive burns with fluid loss"], "e": "Common settings are decreased myocardial contractility, nephrotic syndrome and cirrhosis, where sodium is retained."}, {"q": "Which diuretic class is the most potent in the treatment of edema?", "c": "Loop diuretics", "w": ["Thiazide diuretics", "Potassium-sparing diuretics", "Carbonic anhydrase inhibitors"], "e": "Diuretics are the primary therapy; loop diuretics are most potent, followed by thiazides and potassium-sparing diuretics."}, {"q": "Hypernatremia is defined as a serum sodium above:", "c": "145 mmol/L", "w": ["135 mmol/L", "5 mmol/L", "2 mmol/L"], "e": "Hypernatremia is serum sodium &gt;145 mmol/L, usually from water loss or hypotonic fluid loss."}, {"q": "Rapidly developing hypernatremia may cause:", "c": "Twitching, seizures, coma and death", "w": ["Tetany with a prolonged QT interval", "Palpitations with ECG changes only", "Sedation with respiratory depression"], "e": "Weakness, lethargy, restlessness, irritability and confusion can progress to twitching, seizures, coma and death when onset is rapid."}, {"q": "What is the treatment of central diabetes insipidus?", "c": "Desmopressin", "w": ["Thiazide diuretic plus dietary sodium restriction", "Loop diuretic plus 5% dextrose", "0.9% saline followed by 0.45% saline"], "e": "Central DI (AVP deficiency) is treated with desmopressin; nephrogenic DI needs a thiazide plus sodium restriction."}, {"q": "What happens to red blood cells placed in a hypertonic solution?", "c": "They shrink as water moves out of the cell", "w": ["They inflate and eventually burst", "They stay unchanged because water in equals water out", "They take up water because intracellular solute is higher"], "e": "In a hypertonic solution intracellular solute concentration is lower, so water leaves the cell and the cells shrink."}, {"q": "Which serum sodium level is classified as profound hyponatremia?", "c": "&lt;125 mmol/L", "w": ["130–134 mmol/L", "125–129 mmol/L", "&lt;135 mmol/L"], "e": "Hyponatremia is &lt;135 mmol/L: mild 130–134, moderate 125–129 and profound &lt;125 mmol/L."}, {"q": "Which test helps distinguish hypovolemic hyponatremia from SIADH?", "c": "Urinary sodium concentration", "w": ["Serum osmolality", "Urine osmolality", "Plasma AVP level"], "e": "Urinary sodium concentration separates hypovolemic hyponatremia from SIADH; serum and urine osmolality answer other questions."}, {"q": "Hypokalemia is defined as a serum potassium below:", "c": "3.5 mEq/L", "w": ["5 mEq/L", "1.4 mEq/L", "2 mEq/L"], "e": "Hypokalemia is serum K &lt;3.5 mEq/L (moderate 2.5–3.0, severe &lt;2.5)."}, {"q": "Which potassium replacement route is preferred whenever possible?", "c": "Oral potassium chloride", "w": ["IV potassium given in dextrose", "IV potassium given in saline", "Intramuscular potassium"], "e": "Oral KCl is preferred; IV potassium is reserved for severe hypokalemia, symptoms or inability to tolerate oral therapy."}, {"q": "Hyperkalemia is defined as a serum potassium above:", "c": "5 mEq/L", "w": ["3.5 mEq/L", "2 mEq/L", "4.5 mg/dL"], "e": "Hyperkalemia is serum potassium &gt;5 mEq/L (&gt;5 mmol/L)."}, {"q": "Which is the most rapid method to lower serum potassium in hyperkalemia?", "c": "Dialysis", "w": ["IV calcium", "Insulin plus dextrose", "Loop diuretics"], "e": "Dialysis is the most rapid method; IV calcium only reverses ECG effects and does not lower potassium."}, {"q": "What is the hallmark of acute hypocalcemia?", "c": "Tetany", "w": ["Sedation", "Hyporeflexia", "Polyuria"], "e": "Tetany is the hallmark of acute hypocalcemia; prolonged QT may also occur."}, {"q": "Which are the primary causes of hypocalcemia named in the lecture?", "c": "Postoperative hypoparathyroidism and vitamin D deficiency", "w": ["Cancer and hyperparathyroidism", "Alcoholism and chronic antacid use", "Rhabdomyolysis and tumor lysis syndrome"], "e": "Hypocalcemia results from altered PTH and vitamin D effects; the primary causes are postoperative hypoparathyroidism and vitamin D deficiency."}, {"q": "Which calcium salt is preferred peripherally in acute symptomatic hypocalcemia because it is less irritating?", "c": "Calcium gluconate", "w": ["Calcium carbonate", "Calcitonin", "Cinacalcet"], "e": "IV soluble calcium salts are used; calcium gluconate is preferred peripherally because it is less irritating."}, {"q": "What are the most common causes of hypercalcemia?", "c": "Cancer and hyperparathyroidism", "w": ["Vitamin D deficiency and hypoparathyroidism", "Alcoholism and diarrhea", "Hypothyroidism and Addison disease"], "e": "The lecture states that cancer and hyperparathyroidism are the most common causes of hypercalcemia."}, {"q": "Which condition is commonly associated with hypomagnesemia?", "c": "Alcoholism", "w": ["Advanced CKD", "Magnesium-containing antacids", "Addison disease"], "e": "Hypomagnesemia is commonly associated with alcoholism; the other options are causes of hypermagnesemia."}, {"q": "Hypermagnesemia is defined as a serum magnesium above:", "c": "2 mEq/L (1 mmol/L)", "w": ["1.4 mEq/L (0.70 mmol/L)", "5 mEq/L (5 mmol/L)", "1.45 mmol/L"], "e": "Hypermagnesemia is serum Mg &gt;2 mEq/L (&gt;1 mmol/L), usually with reduced GFR/advanced CKD."}, {"q": "What is the most common cause of hyperphosphatemia?", "c": "Reduced phosphorus excretion from decreased GFR", "w": ["Intracellular phosphate release", "Decreased GI absorption", "Inadequate phosphate in parenteral nutrition"], "e": "Most commonly it is due to reduced excretion from decreased GFR; intracellular release is a less common mechanism."}, {"q": "Hypophosphatemia is defined as a serum phosphorus below:", "c": "2 mg/dL (0.65 mmol/L)", "w": ["4.5 mg/dL (1.45 mmol/L)", "8.5 mg/dL (2.13 mmol/L)", "1.4 mEq/L (0.70 mmol/L)"], "e": "Hypophosphatemia is serum phosphorus &lt;2 mg/dL (&lt;0.65 mmol/L)."}, {"q": "Burosumab is indicated for which condition?", "c": "X-linked hypophosphatemia", "w": ["Malignancy-associated hypercalcemia", "Nephrogenic diabetes insipidus", "Hyperphosphatemia of CKD"], "e": "Burosumab is indicated for X-linked hypophosphatemia in adults and children aged 6 months or older."}, {"q": "Which type of edema is limited to the feet and lower legs?", "c": "Pedal edema", "w": ["Peripheral edema", "Lymphedema", "Macular edema"], "e": "Peripheral edema usually affects legs, feet and ankles (and may involve the arms); pedal edema is limited to the feet/lower legs."}], "2": [{"q": "Which pairing of edema type and cause is correct?", "c": "Cerebral edema — trauma, stroke or cancer", "w": ["Lymphedema — heart failure or ARDS", "Pulmonary edema — cancer treatment by surgery or radiation", "Peripheral edema — trauma, stroke or cancer"], "e": "Lymphedema follows cancer treatment (surgery/radiation); pulmonary edema occurs with heart failure or ARDS/infection/toxins; cerebral edema with trauma, stroke or cancer."}, {"q": "Why do red blood cells inflate and eventually burst in a hypotonic solution?", "c": "Water moves into the cell because solute concentration inside is higher", "w": ["Water moves out of the cell because solute concentration inside is lower", "Water entering equals water leaving because solute concentrations are equal", "Solute moves out of the cell and carries water with it"], "e": "In hypotonic solutions the intracellular solute concentration is higher, so water is transported into the cell."}, {"q": "In hypermagnesemia, what is the purpose of IV calcium?", "c": "It antagonizes the neuromuscular and cardiovascular effects of magnesium", "w": ["It promotes urinary magnesium elimination", "It drives magnesium into cells", "It prevents hypoglycemia during insulin therapy"], "e": "IV calcium antagonizes magnesium's effects; elimination is promoted by 0.45% NaCl plus a loop diuretic, and glucose accompanies insulin to prevent hypoglycemia."}, {"q": "Extreme exercise or seizures cause hypernatremia through which mechanism?", "c": "Water shift into cells due to increased intracellular osmoles", "w": ["Renal loss of hypotonic fluid", "Hypertonic sodium gain from infused solutions", "Pure-water deficit from AVP deficiency"], "e": "Water shift into cells (increased intracellular osmoles) is the fourth mechanism of hypernatremia, seen with extreme exercise or seizures."}, {"q": "Which group of causes is associated with hypophosphatemia?", "c": "Inadequate phosphate in parenteral nutrition and chronic alcoholism", "w": ["Rhabdomyolysis and tumor lysis syndrome", "Reduced GFR and advanced CKD", "Eclampsia treatment and lithium"], "e": "Hypophosphatemia is associated with inadequate parenteral phosphate, chronic alcoholism, chronic antacid use, DKA and prolonged hyperventilation; the other pairs relate to hyperphosphatemia or hypermagnesemia."}, {"q": "What is the correct treatment sequence in hypovolemic hypernatremia?", "c": "0.9% saline first, then 5% dextrose or 0.45% saline for the free-water deficit", "w": ["5% dextrose first, then 0.9% saline after stabilization", "Desmopressin first, then a loop diuretic", "Loop diuretic plus 5% dextrose from the start"], "e": "Correct the volume disturbance first, then the hypertonicity (free-water deficit) after stabilization."}, {"q": "Normal or slightly decreased ECF sodium with increased total body water, commonly SIADH, describes which type of hyponatremia?", "c": "Hypotonic — euvolemic", "w": ["Hypotonic — hypovolemic", "Hypotonic — hypervolemic", "Isotonic"], "e": "Euvolemic hypotonic hyponatremia has normal/slightly low ECF sodium with increased total body water and is commonly SIADH."}, {"q": "Which test differentiates true hyponatremia from pseudohyponatremia or hypertonic hyponatremia?", "c": "Serum osmolality", "w": ["Urine osmolality", "Urinary sodium concentration", "Plasma AVP level"], "e": "Serum osmolality identifies true hyponatremia; urine osmolality separates impaired free-water excretion from primary polydipsia."}, {"q": "Besides 3% saline plus a loop diuretic, which option may be used in selected cases of SIADH?", "c": "Demeclocycline", "w": ["Desmopressin", "A thiazide diuretic", "Calcitonin"], "e": "Other SIADH options in selected cases are sodium chloride/urea tablets, demeclocycline or vaptans."}, {"q": "Laxatives and sorbitol cause hypokalemia through which mechanism?", "c": "Enhanced fecal elimination", "w": ["Transcellular shift", "Enhanced renal excretion", "Tubular unresponsiveness to aldosterone"], "e": "Drug-induced hypokalemia: laxatives/sorbitol enhance fecal elimination; tocolytics, theophylline, caffeine and insulin overdose cause transcellular shift; diuretics etc. enhance renal excretion."}, {"q": "Why should IV potassium be administered in saline rather than dextrose?", "c": "Dextrose may stimulate insulin and worsen the intracellular potassium shift", "w": ["Saline raises serum potassium more quickly", "Dextrose can cause osmotic demyelination", "Saline prevents irritation of peripheral veins"], "e": "Dextrose may stimulate insulin, driving potassium into cells and worsening hypokalemia."}, {"q": "Which agent shifts potassium intracellularly in hyperkalemia?", "c": "Insulin plus dextrose", "w": ["IV calcium", "Loop diuretics", "Potassium binders"], "e": "Insulin + dextrose, bicarbonate and salbutamol shift K into cells; IV calcium stabilizes the ECG, loop diuretics increase renal excretion and binders suit mild–moderate asymptomatic cases."}, {"q": "Which treatment is used for hypercalcemia when saline is contraindicated?", "c": "Calcitonin", "w": ["Cinacalcet", "Corticosteroids", "Denosumab"], "e": "Calcitonin is used if saline is contraindicated; cinacalcet is for parathyroid carcinoma and denosumab follows suboptimal bisphosphonate response."}, {"q": "Which statement about hypomagnesemia management is correct?", "c": "IV magnesium for &lt;1 mEq/L or symptomatic cases, with a reduced dose in renal insufficiency", "w": ["IM magnesium is first line because it is painless", "Oral magnesium is required for all symptomatic patients", "Amiloride, spironolactone and triamterene should be avoided"], "e": "IV magnesium is used for &lt;1 mEq/L or symptoms (IM only with limited access, and painful); the dose is reduced in renal insufficiency; potassium-sparing diuretics are used to avoid urinary K loss."}, {"q": "Which two agents are the non-calcium, non-aluminum phosphate binders listed for hyperphosphatemia?", "c": "Sevelamer and sucroferric oxyhydroxide", "w": ["Aluminum salts and calcium carbonate", "Loop diuretics and acetazolamide", "Calcium carbonate and ferric citrate"], "e": "Sevelamer, lanthanum carbonate, sucroferric oxyhydroxide and ferric citrate are the non-calcium/non-aluminum binders; aluminum salts and calcium carbonate are the standard binders."}], "3": [{"q": "A cirrhotic patient has hypotonic hyponatremia with increased ECF volume. Which treatment fits?", "c": "3% saline, fluid restriction and a loop diuretic", "w": ["0.9% saline alone", "Desmopressin with 5% dextrose", "A thiazide diuretic with sodium restriction"], "e": "Hypotonic–hypervolemic hyponatremia (cirrhosis, heart failure, nephrotic syndrome) is treated with 3% saline, fluid restriction and a loop diuretic."}, {"q": "A patient on thiazides has lost more sodium than water, with loss of ECF volume. Which classification and treatment fit?", "c": "Hypotonic — hypovolemic; 0.9% saline", "w": ["Hypotonic — euvolemic; 3% saline plus a loop diuretic", "Hypotonic — hypervolemic; 3% saline, fluid restriction and a loop diuretic", "Isotonic; sodium restriction"], "e": "Sodium loss exceeding water loss with ECF loss (as with thiazides) is hypovolemic hypotonic hyponatremia, treated with 0.9% saline."}, {"q": "A hypernatremic patient has polyuria, and plasma AVP is measured to separate central from nephrogenic diabetes insipidus. Which treatments match the two types?", "c": "Central: desmopressin; nephrogenic: thiazide plus dietary sodium restriction", "w": ["Central: thiazide plus sodium restriction; nephrogenic: desmopressin", "Central: loop diuretic plus 5% dextrose; nephrogenic: desmopressin", "Both types: 0.9% saline followed by 0.45% saline"], "e": "Polyuria prompts evaluation for DI, plasma AVP separates the types, and treatment follows: central — desmopressin; nephrogenic — thiazide plus sodium restriction."}, {"q": "A patient has severe symptomatic hyponatremia. Which regimen and main correction risk are stated?", "c": "100 mL of 3% NaCl IV over 10 minutes, up to ×3; risk of osmotic demyelination with overly rapid correction", "w": ["3% NaCl at 0.5–2 mL/kg/h; risk of osmotic demyelination with overly rapid correction", "100 mL of 0.9% saline IV over 10 minutes; risk of osmotic demyelination with overly rapid correction", "100 mL of 3% NaCl IV over 10 minutes, up to ×3; risk of hyperkalemia with overly rapid correction"], "e": "Severe symptoms: 100 mL of 3% NaCl over 10 min, repeated up to ×3. The 0.5–2 mL/kg/h rate is for mild–moderate symptoms at low herniation risk. Overly rapid correction risks osmotic demyelination."}, {"q": "A patient with hypocalcemia and hypokalemia is also found to have hypomagnesemia. Which approach fits the lecture?", "c": "Magnesium supplementation, because hypomagnesemia causes hypokalemia and may coexist with both", "w": ["Calcium gluconate alone, because magnesium is unrelated to the other two", "A potassium-sparing diuretic alone to correct all three disorders", "Recombinant human PTH as first-line therapy for all three"], "e": "Hypomagnesemia is a cause of hypokalemia and may coexist with hypokalemia and hypocalcemia; hypocalcemia with associated hypomagnesemia is treated with magnesium supplementation."}, {"q": "A patient with tumor lysis syndrome has high serum phosphate and tetany. Which explanation and treatment fit?", "c": "Hypocalcemia due to hyperphosphatemia; IV calcium salts", "w": ["Hypomagnesemia; IV magnesium", "Hypocalcemia; phosphate binders alone", "Hypophosphatemia; IV phosphorus replacement"], "e": "Intracellular phosphate release raises phosphate, and its major effects relate to hypocalcemia and calcium-phosphate precipitation; severe symptomatic cases with tetany get IV calcium salts."}, {"q": "Which statement correctly matches the agents to their roles in hyperkalemia?", "c": "Dialysis lowers potassium most rapidly; IV calcium only reverses ECG effects", "w": ["IV calcium lowers potassium most rapidly; dialysis only reverses ECG effects", "Loop diuretics shift potassium into cells; salbutamol increases renal excretion", "Potassium binders suit severe symptomatic cases; magnesium sulfate lowers potassium"], "e": "Dialysis is the most rapid method to lower K; IV calcium reverses ECG changes without lowering K; insulin/dextrose/bicarbonate/salbutamol shift K; loop diuretics increase excretion; binders suit asymptomatic mild–moderate cases."}, {"q": "A CKD patient taking magnesium-containing antacids has sedation, hyporeflexia, hypotension and bradycardia. Which treatment depends on adequate renal function?", "c": "0.45% NaCl plus a loop diuretic to promote magnesium elimination", "w": ["IV calcium to antagonize the effects of magnesium", "Magnesium-free dialysate in dialysis patients", "Glucose plus insulin to promote magnesium entry into cells"], "e": "This is hypermagnesemia; saline plus loop diuretic promotes Mg elimination only in patients with adequate renal function, whereas IV calcium, magnesium-free dialysate and glucose/insulin do not rely on renal clearance."}, {"q": "A chronic alcoholic on parenteral nutrition develops rhabdomyolysis and respiratory failure. Which mechanism and treatment fit?", "c": "Severe hypophosphatemia; IV phosphorus with frequent phosphorus and calcium monitoring", "w": ["Severe hyperphosphatemia; sevelamer and loop diuretics", "Severe hypocalcemia; recombinant human PTH", "Severe hypomagnesemia; oral magnesium only"], "e": "Inadequate parenteral phosphate and chronic alcoholism cause hypophosphatemia, whose severe form causes rhabdomyolysis and respiratory failure; severe/symptomatic cases need IV phosphorus with frequent phosphorus and calcium monitoring."}, {"q": "A cancer patient in hypercalcemic crisis cannot receive saline and has responded suboptimally to bisphosphonates. Which choices fit?", "c": "Calcitonin for the crisis; denosumab for the suboptimal bisphosphonate response", "w": ["Cinacalcet for the crisis; denosumab for the bisphosphonate response", "Calcitonin for the crisis; cinacalcet for the bisphosphonate response", "Loop diuretics alone for the crisis; corticosteroids for the bisphosphonate response"], "e": "Calcitonin is used when saline is contraindicated; denosumab may be useful after suboptimal bisphosphonate response in malignancy-associated hypercalcemia; cinacalcet is used for parathyroid carcinoma."}]};
+function shuffle(arr){
+    var a = arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j = Math.floor(Math.random()*(i+1));
+      var t=a[i]; a[i]=a[j]; a[j]=t;
+    }
+    return a;
+  }
+
+  function buildLevelState(l){
+    return {
+      qi: 0,
+      data: quizBank[l].map(function(item){
+        return {q:item.q, options:shuffle([item.c].concat(item.w)), correct:item.c, e:item.e || '', answered:false, selected:null};
+      })
+    };
+  }
+
+  var quizLevel = 1;
+  var quizStates = {};
+  var quizData, qi, score = 0;
+  var quizCard = document.getElementById('quizCard');
+  var quizSummary = document.getElementById('quizSummary');
+  var quizLevels = document.getElementById('quizLevels');
+  var quizQ = document.getElementById('quizQ');
+  var quizOptions = document.getElementById('quizOptions');
+  var quizProgress = document.getElementById('quizProgress');
+  var quizScore = document.getElementById('quizScore');
+  var quizFeedback = document.getElementById('quizFeedback');
+  var progressFill = document.getElementById('progressFill');
+  var quizNext = document.getElementById('quizNext');
+  var quizPrev = document.getElementById('quizPrev');
+  var quizJump = document.getElementById('quizJump');
+  var letters = ['A','B','C','D'];
+
+  [1,2,3].forEach(function(l){
+    var b = document.createElement('button');
+    b.className = 'fc-filter' + (l===1 ? ' active' : '');
+    b.textContent = levelLabels[l] + ' (' + quizBank[l].length + ')';
+    b.addEventListener('click', function(){
+      quizLevels.querySelectorAll('.fc-filter').forEach(function(f){ f.classList.remove('active'); });
+      b.classList.add('active');
+      loadQuizLevel(l);
+    });
+    quizLevels.appendChild(b);
+  });
+
+  function loadQuizLevel(l){
+    quizLevel = l;
+    if(!quizStates[l]) quizStates[l] = buildLevelState(l);
+    quizData = quizStates[l].data;
+    qi = quizStates[l].qi;
+    quizJump.innerHTML = '';
+    quizData.forEach(function(_, idx){
+      var jb = document.createElement('button');
+      jb.textContent = idx+1;
+      jb.addEventListener('click', function(){ qi = idx; renderQuiz(); });
+      quizJump.appendChild(jb);
+    });
+    quizSummary.style.display = 'none';
+    quizCard.style.display = '';
+    renderQuiz();
+  }
+
+  function updateScore(){
+    var answered = quizData.filter(function(d){return d.answered;});
+    var correctCount = answered.filter(function(d){return d.selected===d.correct;}).length;
+    score = correctCount;
+    quizScore.textContent = 'Score: ' + correctCount + ' / ' + answered.length;
+  }
+
+  function renderQuiz(){
+    var item = quizData[qi];
+    quizStates[quizLevel].qi = qi;
+    quizQ.innerHTML = item.q;
+    quizProgress.textContent = levelLabels[quizLevel] + ' · Question ' + (qi+1) + ' / ' + quizData.length;
+    progressFill.style.width = (((qi+1)/quizData.length)*100) + '%';
+    quizOptions.innerHTML = '';
+    quizFeedback.innerHTML = item.answered ? ((item.selected===item.correct ? '<strong>Correct.</strong>' : '<strong>Not quite — correct answer highlighted.</strong>') + (item.e ? ' ' + item.e : '')) : '';
+    item.options.forEach(function(opt, i){
+      var b = document.createElement('button');
+      b.className = 'quiz-opt';
+      b.innerHTML = '<span class="letter">' + letters[i] + '</span><span>' + opt + '</span>';
+      if(item.answered){
+        b.classList.add('locked');
+        if(opt===item.correct) b.classList.add('correct');
+        else if(opt===item.selected) b.classList.add('wrong');
+      }
+      b.addEventListener('click', function(){
+        if(item.answered) return;
+        item.answered = true;
+        item.selected = opt;
+        updateScore();
+        renderQuiz();
+      });
+      quizOptions.appendChild(b);
+    });
+    quizNext.disabled = !item.answered;
+    quizPrev.disabled = qi===0;
+    quizNext.textContent = (qi === quizData.length-1) ? 'Finish' : 'Next';
+    updateScore();
+    document.querySelectorAll('.quiz-jump button').forEach(function(b, idx){
+      b.classList.toggle('done', quizData[idx].answered);
+      b.classList.toggle('current', idx===qi);
+    });
+  }
+
+  quizNext.addEventListener('click', function(){
+    if(qi < quizData.length-1){ qi++; renderQuiz(); }
+    else{
+      var answered = quizData.filter(function(d){return d.answered;});
+      var correctCount = answered.filter(function(d){return d.selected===d.correct;}).length;
+      quizCard.style.display = 'none';
+      quizSummary.style.display = '';
+      quizSummary.innerHTML =
+        '<div class="quiz-summary"><span class="big">' + correctCount + ' / ' + quizData.length + '</span>' +
+        '<p style="color:var(--ink-soft); margin-top:8px;">Questions answered correctly in ' + levelLabels[quizLevel] + '.</p>' +
+        '<button class="quiz-btn" id="quizRestart" style="margin-top:6px;">Restart this level</button></div>';
+      document.getElementById('quizRestart').addEventListener('click', function(){
+        quizStates[quizLevel] = buildLevelState(quizLevel);
+        loadQuizLevel(quizLevel);
+      });
+    }
+  });
+  quizPrev.addEventListener('click', function(){ if(qi>0){ qi--; renderQuiz(); } });
+
+  loadQuizLevel(1);
+
+
+})();
+</script>
+</body>
+</html>
